@@ -1,0 +1,6 @@
+# axis: [palm, thumb, finger] 
+# center: root of the middle finger
+
+rh_palm:
+  r: [[0.0, -1, 0],[1, 0, 0],[0, 0, 1]]
+  t: [0.0, 0.0, -0.08]

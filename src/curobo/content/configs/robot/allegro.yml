@@ -1,0 +1,186 @@
+##
+## Copyright (c) 2023 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+##
+## NVIDIA CORPORATION, its affiliates and licensors retain all intellectual
+## property and proprietary rights in and to this material, related
+## documentation and any modifications thereto. Any use, reproduction,
+## disclosure or distribution of this material and related documentation
+## without an express license agreement from NVIDIA CORPORATION or
+## its affiliates is strictly prohibited.
+##
+robot_cfg:
+  robot_color: [0.0544794, 0.376262, 0.913099, 1.0]
+  kinematics:
+    base_link: base_link
+    use_root_pose: True
+    hand_pose_transfer_path: "hand_pose_transfer/allegro.yml"
+    collision_link_names:
+      - base_link
+      - link_1.0
+      - link_2.0
+      - link_3.0
+      - link_3.0_tip
+      - link_5.0
+      - link_6.0
+      - link_7.0
+      - link_7.0_tip
+      - link_9.0
+      - link_10.0
+      - link_11.0
+      - link_11.0_tip
+      - link_12.0
+      - link_13.0
+      - link_14.0
+      - link_15.0
+      - link_15.0_tip
+    collision_sphere_buffer: 0.0
+    collision_spheres: spheres/allegro.yml
+    ee_link: link_3.0_tip
+    link_names:
+      - link_3.0_tip
+      - link_7.0_tip
+      - link_11.0_tip
+      - link_15.0_tip
+    self_collision_buffer:
+      base_link: 0.0
+      link_1.0: 0.0
+      link_2.0: 0.0
+      link_3.0: 0.002
+      link_3.0_tip: 0.0
+      link_5.0: 0.0
+      link_6.0: 0.0
+      link_7.0: 0.002
+      link_7.0_tip: 0.0
+      link_9.0: 0.0
+      link_10.0: 0.0
+      link_11.0: 0.002
+      link_11.0_tip: 0.0
+      link_12.0: 0.0
+      link_13.0: 0.0
+      link_14.0: 0.0
+      link_15.0: 0.002
+      link_15.0_tip: 0.0
+    self_collision_ignore: {
+        base_link:
+          [
+            link_1.0,
+            link_5.0,
+            link_9.0,
+            link_12.0,
+          ],
+        link_1.0: [link_2.0],
+        link_2.0: [link_3.0],
+        link_3.0: [link_3.0_tip],
+        link_5.0: [link_6.0],
+        link_6.0: [link_7.0],
+        link_7.0: [link_7.0_tip],
+        link_9.0: [link_10.0],
+        link_10.0: [link_11.0],
+        link_11.0: [link_11.0_tip],
+        link_12.0: [link_13.0, link_14.0],
+        link_13.0: [link_14.0],
+        link_14.0: [link_15.0],
+        link_15.0: [link_15.0_tip],
+      }
+    urdf_path: robot/allegro_description/allegro_hand_description_right.urdf
+    asset_root_path: robot/allegro_description
+    usd_path: robot/allegro_description/allegro.usda
+    usd_robot_root: /allegro
+    cspace:
+      joint_names:
+        [
+          "joint_0.0",
+          "joint_1.0",
+          "joint_2.0",
+          "joint_3.0",
+          "joint_4.0",
+          "joint_5.0",
+          "joint_6.0",
+          "joint_7.0",
+          "joint_8.0",
+          "joint_9.0",
+          "joint_10.0",
+          "joint_11.0",
+          "joint_12.0",
+          "joint_13.0",
+          "joint_14.0",
+          "joint_15.0",
+        ]
+      cspace_distance_weight:
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 1.1
+        - 1.1
+        - 0.1
+        - 0.1
+
+      null_space_weight:
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0 #
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+      retract_config:
+        - 0.0
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.0
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.0
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.9249972105026245
+        - 0.4101402759552002
+        - 0.7242903113365173
+        - 0.7417430877685547
+        - 0.7242903113365173
+      max_acceleration: 15.0
+      max_jerk: 500.0
+    mesh_link_names:
+      [
+        "base_link",
+       "link_0.0",
+       "link_1.0",
+       "link_2.0",
+       "link_3.0",
+       "link_3.0_tip",
+       "link_4.0",
+       "link_5.0",
+       "link_6.0",
+       "link_7.0",
+       "link_7.0_tip",
+       "link_8.0",
+       "link_9.0",
+       "link_10.0",
+       "link_11.0",
+       "link_11.0_tip",
+       "link_12.0",
+       "link_13.0",
+       "link_14.0",
+       "link_15.0",
+       "link_15.0_tip",
+      ]

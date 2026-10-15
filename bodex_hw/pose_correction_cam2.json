@@ -1,0 +1,31 @@
+{
+  "camera": "cam2_extra",
+  "model": "affine",
+  "frame": "world",
+  "A": [
+    [
+      0.906602392054917,
+      -0.050472735738936195,
+      0.0
+    ],
+    [
+      -0.14657461698892088,
+      0.4536412844806995,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "b": [
+    0.09877664881714125,
+    0.18542564801308453,
+    0.0
+  ],
+  "n_points": 9,
+  "residual_mean_xy_m": 0.04585351400686663,
+  "residual_max_xy_m": 0.08005428467005672,
+  "note": "P_true ~= A @ P_fp + b. Compensates FoundationPose world-frame bias from the grazing extra-cam mount. Re-fit if the camera moves."
+}

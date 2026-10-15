@@ -1,0 +1,49 @@
+# Whitelist: ignore everything at the top level, then re-include what the repo ships.
+# Large datasets (BODex / DGN grasp data), Isaac Sim USD assets, recordings and benchmark
+# videos are not stored in git: scripts/install.sh downloads the release assets.
+/*
+!/.gitignore
+!/README.md
+!/LICENSE
+!/LICENSE_ASSETS
+!/setup.py
+!/setup.cfg
+!/pyproject.toml
+!/MANIFEST.in
+!/bodex_hw/
+!/bodex_service/
+!/isaaclab_tasks/
+!/example_grasp/
+!/scripts/
+!/docs/
+!/src/
+
+# --- cuRobo / BODex source: keep code + configs, drop heavy upstream assets ---------------
+/src/curobo/content/assets/output/
+/src/curobo/content/assets/scene/
+/src/curobo/content/assets/object/*
+!/src/curobo/content/assets/object/custom/
+/src/curobo/content/assets/object/custom/scene_cfg/*/runtime/
+/src/curobo/content/assets/robot/*
+!/src/curobo/content/assets/robot/allegro_description/
+!/src/curobo/content/assets/robot/ur_description/
+/src/curobo/content/assets/robot/ur_description/meshes/ur5e/
+/src/curobo/content/assets/robot/ur_description/meshes/ur10e/
+
+# --- sim assets (USD scene, robots, object materials) ship as a release archive ----------
+/isaaclab_tasks/assets/
+/isaaclab_tasks/PROGRESS.md
+
+# --- ROS / build / runtime artefacts ----------------------------------------------------
+/bodex_hw/build/
+/bodex_hw/install/
+/bodex_hw/log/
+/example_grasp/run_*.sh
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+*.zip

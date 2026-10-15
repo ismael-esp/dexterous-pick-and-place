@@ -1,0 +1,67 @@
+world:
+  type: scene_cfg
+  # Points at a single .npy file written by fp_scene_cfg_bridge.py with the
+  # latest FoundationPose detection of the target object.
+  template_path: object/custom/scene_cfg/*/runtime/latest.npy
+  start:
+  end:
+
+robot_file: "ra_allegro.yml"
+robot_file_with_arm: "ra_ur3_allegro.yml"
+base_cfg_file: "base_grasp.yml"
+particle_file: "particle_grasp_debug.yml"
+gradient_file: "gradient_grasp_fc.yml"
+
+exp_name: 'runtime_ra'
+seed_num: 20
+seeder_cfg:
+  obj_sample:
+    num: 128
+    inflate: 0.1
+    convex_hull: True
+    collision_free: False
+  ik_init_q:
+  load_path:
+  skip_transfer: False
+  t:
+  # Full ortho6d = [palm_x (3), palm_y (3)]. For the RIGHT arm's reachable wrist
+  # wedge (verified by IK sweep): palm_x=-Z (palm pressing down, top-down grasp)
+  # and palm_y=-X (thumb pointing world -X). This gives palm_z=+Y (fingers
+  # extending forward). Jitter (±30°,±10°,±10°) perturbs around this.
+  r: [0.0, 0.0, -1.0,  -1.0, 0.0, 0.0]
+  q: [0., 0.6, 0., 0., 0., 0.6, 0., 0., 0., 0.6, 0., 0., 1.2, 0., 0., 0.,]
+  jitter_angle: [[-30, -10, -10], [30, 10, 10]]
+  jitter_dist: [[0.0, -0.02, -0.02], [0.02, 0.02, 0.02]]
+
+grasp_contact_strategy:
+  contact_points_name:
+    - 'ra_link_3_0_tip/0'
+    - 'ra_link_7_0_tip/0'
+    - 'ra_link_11_0_tip/0'
+    - 'ra_link_15_0_tip/0'
+  opt_progress: [0.0, 0.6, 0.8]
+  distance: [0.01, 0.01, 0.0]
+  contact_query_mode: [-1, 0, 0]
+  save_qpos: [False, True]
+  max_ge_stage: 0
+
+grasp_cfg:
+  task_dict:
+    f: [0, 0, 1]
+    p: [0, 0, 0]
+    t: [0, 0, 0]
+    gamma: 180
+  ge_param:
+    type: 'qp'
+    miu_coef: [0.1, 0]
+    solver_type: 'batch_reluqp'
+    k_lower: 0.2
+    pressure_constraints:
+      [[[0, 1, 2, 3], 1.0],
+        [[0, 1], 0.4],
+        [[3], 0.5],
+      ]
+    enable_density: False
+    solve_interval: 5
+
+mogen_init: [0.47700070, -0.76760139, 1.71352310, -4.06449313, -1.25647330, 3.90605361,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dexterous Pick-and-Place</title>
+<meta name="description" content="Perception to grasp synthesis to dual-arm robot: FoundationPose + BODex on UR3/UR3e with Allegro hands, in Isaac Lab and on real hardware.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f9f8f5; --surface:#ffffff; --ink:#1a1c20; --muted:#5b616c; --line:#e4e1da;
+  --accent:#2457d6; --accent-soft:#e6edfb; --warm:#d9640f; --code:#f2f0eb;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#101214; --surface:#171a1e; --ink:#e8e9eb; --muted:#9aa1ab; --line:#2a2e34;
+         --accent:#7aa2ff; --accent-soft:#18213a; --warm:#ff9a4d; --code:#1e2226; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+header{padding:60px 0 24px}
+.eyebrow{font:500 13px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:14px 0;letter-spacing:-.02em}
+.lede{font-size:19px;color:var(--muted);max-width:800px;margin:0}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{display:inline-block;padding:10px 16px;border-radius:8px;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:500;background:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.hero{margin:10px 0 6px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000}
+.hero video{display:block;width:100%;height:auto}
+.cap{font-size:14px;color:var(--muted);margin:8px 0 0}
+h2{font-size:25px;margin:60px 0 10px;letter-spacing:-.01em}
+h3{font-size:18px;margin:30px 0 8px}
+p{max-width:820px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:18px}
+.stat{background:var(--accent-soft);border-radius:10px;padding:14px 16px}
+.stat b{display:block;font-size:26px;letter-spacing:-.01em}
+.stat span{font-size:14px;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.step .n{font:500 12px "JetBrains Mono",monospace;color:var(--accent)}
+.step b{display:block;margin:2px 0 4px}
+.step span{color:var(--muted);font-size:14.5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:16px}
+.grid.small{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+figure img,figure video{display:block;width:100%;height:auto;background:#000}
+figcaption{padding:9px 12px;font-size:14px;color:var(--muted)}
+.tag{display:inline-block;font:500 11px "JetBrains Mono",monospace;padding:2px 6px;border-radius:4px;background:var(--accent-soft);color:var(--accent);margin-right:6px}
+.tag.side{background:rgba(217,100,15,.12);color:var(--warm)}
+.plot{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px;margin-top:14px}
+.plot img{display:block;width:100%}
+.tablewrap{overflow-x:auto;margin-top:14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-weight:600;color:var(--muted);font-size:13px}
+tr:last-child td{border-bottom:0;font-weight:600}
+td.num{font-variant-numeric:tabular-nums}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font:13.5px/1.55 "JetBrains Mono",monospace}
+code{font-family:"JetBrains Mono",monospace;font-size:.92em}
+footer{margin:64px 0 40px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Dexterous manipulation · dual-arm · sim + real</div>
+  <h1>Dexterous Pick-and-Place</h1>
+  <p class="lede">A camera finds the object in 6D, a GPU grasp synthesizer plans a multi-finger grasp plus a
+  collision-free arm trajectory, and a UR arm with a 16-DoF Allegro hand picks the object and places it.
+  One synthesis service drives both the Isaac Lab digital twin (both arms) and the real robot.</p>
+  <div class="btns">
+    <a class="btn primary" href="https://github.com/ismael-esp/dexterous-pick-and-place">Code &amp; setup guide</a>
+    <a class="btn" href="reports/hardware_final_benchmark.html">Interactive hardware report</a>
+    <a class="btn" href="https://github.com/ismael-esp/foundationpose-ros2-tracker">Perception: FoundationPose tracker</a>
+  </div>
+</header>
+
+<div class="hero">
+  <video src="media/hardware/hw_highlights_10_objects.mp4" autoplay muted loop playsinline controls></video>
+</div>
+<p class="cap">All 10 benchmark objects on the real robot (right UR3 + Allegro), 3× speed. Each object was localized by
+FoundationPose, then grasped and placed with a trajectory synthesized online.</p>
+
+<div class="stats">
+  <div class="stat"><b>94 / 100</b><span>real-robot trials succeeded (10 objects × 10, right arm)</span></div>
+  <div class="stat"><b>180 / 200</b><span>Isaac Lab episodes succeeded, both arms (right 88/100, left 92/100)</span></div>
+  <div class="stat"><b>10</b><span>objects: cubes, plush toys, carton, bottles, can (top and side grasps)</span></div>
+  <div class="stat"><b>22-DoF</b><span>trajectory per pick: 6 arm + 16 finger joints</span></div>
+</div>
+
+<h2>How it works</h2>
+<div class="steps">
+  <div class="step"><span class="n">01 · perceive</span><b>FoundationPose</b><span>YOLO-World + SAM 2 + FoundationPose give the object pose in the world frame. In sim the spawn pose is used.</span></div>
+  <div class="step"><span class="n">02 · synthesize</span><b>BODex on cuRobo</b><span>Hundreds of force-closure grasp seeds are optimized in parallel, with IK for pregrasp, grasp and lift. The other arm is treated as an obstacle.</span></div>
+  <div class="step"><span class="n">03 · select</span><b>Secure, collision-free</b><span>The chosen grasp engages the most fingers. Open-hand approaches that would hit the arm or table are rejected, and side grasps go up, out, down and in.</span></div>
+  <div class="step"><span class="n">04 · execute</span><b>Closed-loop barriers</b><span>A 125 Hz joint stream. The hand closes only once the arm has arrived and opens at the place with the arm held still, behind safety gates.</span></div>
+</div>
+
+<h2>Real robot</h2>
+<p>Final benchmark, 2026-09-03: right UR3 + Allegro, 10 executed trials per object, with the object
+re-placed by hand at a new spot every trial and operator scoring.</p>
+<div class="tablewrap"><table>
+<tr><th>object</th><th>grasp</th><th>success</th><th>no-grasp aborts</th><th>mean grasp error</th><th>cycle time</th></tr>
+<tr><td>green_cube</td><td><span class="tag">top</span></td><td class="num">9/10</td><td class="num">0</td><td class="num">0.086</td><td class="num">52.1 s</td></tr>
+<tr><td>red_cube</td><td><span class="tag">top</span></td><td class="num">10/10</td><td class="num">0</td><td class="num">0.088</td><td class="num">55.1 s</td></tr>
+<tr><td>pikachu (plush)</td><td><span class="tag">top</span></td><td class="num">9/10</td><td class="num">0</td><td class="num">0.142</td><td class="num">56.4 s</td></tr>
+<tr><td>whale (plush)</td><td><span class="tag">top</span></td><td class="num">8/10</td><td class="num">1</td><td class="num">0.172</td><td class="num">52.4 s</td></tr>
+<tr><td>snorlax (plush)</td><td><span class="tag">top</span></td><td class="num">9/10</td><td class="num">0</td><td class="num">0.079</td><td class="num">61.6 s</td></tr>
+<tr><td>tiger (plush)</td><td><span class="tag">top</span></td><td class="num">9/10</td><td class="num">0</td><td class="num">0.083</td><td class="num">54.0 s</td></tr>
+<tr><td>milk carton</td><td><span class="tag">top</span></td><td class="num">10/10</td><td class="num">0</td><td class="num">0.079</td><td class="num">50.0 s</td></tr>
+<tr><td>mustard bottle</td><td><span class="tag side">side</span></td><td class="num">10/10</td><td class="num">2</td><td class="num">0.101</td><td class="num">54.4 s</td></tr>
+<tr><td>green_can</td><td><span class="tag side">side</span></td><td class="num">10/10</td><td class="num">0</td><td class="num">0.133</td><td class="num">54.1 s</td></tr>
+<tr><td>tea_peach bottle</td><td><span class="tag side">side</span></td><td class="num">10/10</td><td class="num">0</td><td class="num">0.127</td><td class="num">55.9 s</td></tr>
+<tr><td>all</td><td></td><td class="num">94/100 (94.0%)</td><td class="num">3</td><td class="num">0.109</td><td class="num">54.6 s</td></tr>
+</table></div>
+<div class="grid">
+  <div class="plot"><img src="results/hardware/rate.png" alt="Success rate by object" loading="lazy"></div>
+  <div class="plot"><img src="results/hardware/workspace.png" alt="Right-arm workspace map of trial outcomes" loading="lazy"></div>
+</div>
+
+<h3>One successful trial per object (3× speed)</h3>
+<div class="grid small">
+  <figure><video src="media/hardware/hw_green_cube.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>green cube</figcaption></figure>
+  <figure><video src="media/hardware/hw_red_cube.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>red cube</figcaption></figure>
+  <figure><video src="media/hardware/hw_pikachu.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>pikachu plush</figcaption></figure>
+  <figure><video src="media/hardware/hw_whale.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>whale plush</figcaption></figure>
+  <figure><video src="media/hardware/hw_snorlax.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>snorlax plush</figcaption></figure>
+  <figure><video src="media/hardware/hw_tiger.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>tiger plush</figcaption></figure>
+  <figure><video src="media/hardware/hw_milk.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>milk carton</figcaption></figure>
+  <figure><video src="media/hardware/hw_mustard.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag side">side</span>mustard bottle</figcaption></figure>
+  <figure><video src="media/hardware/hw_green_can.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag side">side</span>green can</figcaption></figure>
+  <figure><video src="media/hardware/hw_tea_peach.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag side">side</span>tea bottle</figcaption></figure>
+</div>
+
+<h2 id="sim">Simulation: both arms in Isaac Lab</h2>
+<p>The same synthesis service and code path, run on the dual-arm digital twin. Every episode uses a random spawn pose
+and a random place target, and the idle arm stays in the scene as an obstacle. Success means the object was lifted
+≥ 3 cm and ended within 15 cm (xy) / 8 cm (z) of the target. 10 episodes per object per arm (2026-10-15).
+The left arm (UR3e) was only tested in simulation.</p>
+<div class="tablewrap"><table>
+<tr><th>object</th><th>grasp</th><th>right arm (UR3)</th><th>left arm (UR3e)</th></tr>
+<tr><td>green cube</td><td><span class="tag">top</span></td><td class="num">10/10</td><td class="num">9/10</td></tr>
+<tr><td>red cube</td><td><span class="tag">top</span></td><td class="num">10/10</td><td class="num">10/10</td></tr>
+<tr><td>pikachu (plush)</td><td><span class="tag">top</span></td><td class="num">10/10</td><td class="num">9/10</td></tr>
+<tr><td>whale (plush)</td><td><span class="tag">top</span></td><td class="num">10/10</td><td class="num">10/10</td></tr>
+<tr><td>snorlax (plush)</td><td><span class="tag">top</span></td><td class="num">7/10</td><td class="num">10/10</td></tr>
+<tr><td>tiger (plush)</td><td><span class="tag">top</span></td><td class="num">8/10</td><td class="num">9/10</td></tr>
+<tr><td>milk carton</td><td><span class="tag">top</span></td><td class="num">10/10</td><td class="num">10/10</td></tr>
+<tr><td>mustard bottle</td><td><span class="tag side">side</span></td><td class="num">7/10</td><td class="num">8/10</td></tr>
+<tr><td>green can</td><td><span class="tag side">side</span></td><td class="num">9/10</td><td class="num">8/10</td></tr>
+<tr><td>tea_peach bottle</td><td><span class="tag side">side</span></td><td class="num">7/10</td><td class="num">9/10</td></tr>
+<tr><td>all</td><td></td><td class="num">88/100 (88%)</td><td class="num">92/100 (92%)</td></tr>
+</table></div>
+<div class="plot"><img src="results/sim/sim_success_by_object.png" alt="Simulation success by object and arm" loading="lazy"></div>
+<div class="plot"><img src="results/sim/sim_workspace_and_timing.png" alt="Simulation spawn positions and synthesis time" loading="lazy"></div>
+<h3>Right arm (UR3 + right Allegro), real time</h3>
+<div class="grid small">
+  <figure><video src="media/sim/sim_ra_green_cube.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>green cube</figcaption></figure>
+  <figure><video src="media/sim/sim_ra_red_cube.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>red cube</figcaption></figure>
+  <figure><video src="media/sim/sim_ra_pikachu.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>pikachu (plush)</figcaption></figure>
+  <figure><video src="media/sim/sim_ra_whale.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>whale (plush)</figcaption></figure>
+  <figure><video src="media/sim/sim_ra_snorlax.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>snorlax (plush)</figcaption></figure>
+  <figure><video src="media/sim/sim_ra_tiger.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>tiger (plush)</figcaption></figure>
+  <figure><video src="media/sim/sim_ra_milk.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>milk carton</figcaption></figure>
+  <figure><video src="media/sim/sim_ra_mustard.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag side">side</span>mustard bottle</figcaption></figure>
+  <figure><video src="media/sim/sim_ra_green_can.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag side">side</span>green can</figcaption></figure>
+  <figure><video src="media/sim/sim_ra_tea_peach.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag side">side</span>tea_peach bottle</figcaption></figure>
+</div>
+<h3>Left arm (UR3e + left Allegro), real time</h3>
+<div class="grid small">
+  <figure><video src="media/sim/sim_la_green_cube.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>green cube</figcaption></figure>
+  <figure><video src="media/sim/sim_la_red_cube.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>red cube</figcaption></figure>
+  <figure><video src="media/sim/sim_la_pikachu.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>pikachu (plush)</figcaption></figure>
+  <figure><video src="media/sim/sim_la_whale.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>whale (plush)</figcaption></figure>
+  <figure><video src="media/sim/sim_la_snorlax.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>snorlax (plush)</figcaption></figure>
+  <figure><video src="media/sim/sim_la_tiger.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>tiger (plush)</figcaption></figure>
+  <figure><video src="media/sim/sim_la_milk.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>milk carton</figcaption></figure>
+  <figure><video src="media/sim/sim_la_mustard.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag">top</span>mustard bottle (side infeasible → top fallback)</figcaption></figure>
+  <figure><video src="media/sim/sim_la_green_can.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag side">side</span>green can</figcaption></figure>
+  <figure><video src="media/sim/sim_la_tea_peach.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag side">side</span>tea_peach bottle</figcaption></figure>
+</div>
+
+<h2>Try it</h2>
+<pre><code>git clone https://github.com/ismael-esp/dexterous-pick-and-place.git
+cd dexterous-pick-and-place
+bash scripts/install.sh                      # bodex env + CUDA kernels + Isaac Lab scene assets
+python scripts/check_install.py --synth      # one real grasp + trajectory synthesis
+ISAAC_PY=/path/to/isaaclab/python bash scripts/run_sim_benchmark.sh   # both arms in Isaac Lab</code></pre>
+<p>Tested on Ubuntu 22.04 with 2× RTX 5070 Ti, CUDA 12.8, Isaac Sim 5.1 + Isaac Lab 2.3.0 and ROS 2 Humble.
+The README covers hardware setup, adding objects, configuration and troubleshooting.</p>
+
+<footer>
+  Ismael Espinoza · built on <a href="https://github.com/JYChen18/BODex">BODex</a> and
+  <a href="https://github.com/NVlabs/curobo">cuRobo</a> (NVIDIA License),
+  <a href="https://github.com/NVlabs/FoundationPose">FoundationPose</a> and
+  <a href="https://github.com/isaac-sim/IsaacLab">Isaac Lab</a>.
+</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,183 @@
+##
+## Copyright (c) 2023 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+##
+## NVIDIA CORPORATION, its affiliates and licensors retain all intellectual
+## property and proprietary rights in and to this material, related
+## documentation and any modifications thereto. Any use, reproduction,
+## disclosure or distribution of this material and related documentation
+## without an express license agreement from NVIDIA CORPORATION or
+## its affiliates is strictly prohibited.
+##
+robot: 'UR10'
+collision_spheres:
+  shoulder_link:
+    - center: [0, 0, 0]
+      radius: 0.05
+  upper_arm_link:
+    - center: [-0, -0, 0.18]
+      radius: 0.1
+    - center: [-0.102167, 0,  0.18]
+      radius: 0.06
+    - center: [-0.204333, 0, 0.18]
+      radius: 0.06
+    - center: [-0.3065, 0, 0.18]
+      radius: 0.06
+    - center: [-0.408667, 0, 0.18]
+      radius: 0.06
+    - center: [-0.510833, 0, 0.18]
+      radius: 0.06
+    - center: [ -0.613, 0,0.18]
+      radius: 0.08
+  forearm_link:
+    - center: [-0, 0, 0.03]
+      radius: 0.06
+    - center: [-0.0951667, 0, 0.03]
+      radius: 0.06
+    - center: [-0.190333, 0, 0.03]
+      radius: 0.06
+    - center: [-0.2855, 0, 0.03]
+      radius: 0.06
+    - center: [-0.380667, 0,0.03]
+      radius: 0.06
+    - center: [-0.475833, 0,0.03]
+      radius: 0.06
+    - center: [-0.571, -1.19904e-17, 0.03]
+      radius: 0.06
+  wrist_1_link:
+    - center: [0, 0, 0]
+      radius: 0.06
+  wrist_2_link:
+    - center: [0, 0, 0]
+      radius: 0.06
+  wrist_3_link:
+    - center: [0, 0, -0.05]
+      radius: 0.06
+
+#<!--Begin hands.yml-->
+  rh_palm:
+    - "center": [0.025, -0.005, 0.015]
+      "radius": 0.02
+    - "center": [0.028, 0.0, 0.054]
+      "radius": 0.0125
+    - "center": [-0.02, -0.003, 0.015]
+      "radius": 0.02
+    - "center": [0.029, 0.0, 0.074]
+      "radius": 0.0125
+    - "center": [-0.01, 0.0, 0.074]
+      "radius": 0.0125
+    - "center": [-0.01, 0.0, 0.053]
+      "radius": 0.0125
+    - "center": [0.009, 0.0, 0.053]
+      "radius": 0.0125
+    - "center": [0.01, 0.0, 0.077]
+      "radius": 0.0125
+    - "center": [0.001, 0.0, 0.029]
+      "radius": 0.02
+  rh_ffproximal:
+    - "center": [0.0, 0.0, 0.0]
+      "radius": 0.01
+    - "center": [0.0, 0.0, 0.034]
+      "radius": 0.01
+    - "center": [0.0, 0.0, 0.017]
+      "radius": 0.01
+  rh_ffmiddle:
+    - "center": [0.0, 0.0, 0.002]
+      "radius": 0.01
+    - "center": [0.0, 0.0, 0.016]
+      "radius": 0.009
+  rh_ffdistal:
+    - "center": [0.0, 0.001, 0.001]
+      "radius": 0.008
+    - "center": [0.0, 0.001, 0.012]
+      "radius": 0.008
+    - "center": [0.0, 0.001, 0.022]
+      "radius": 0.0075
+  rh_mfproximal:
+    - "center": [0.0, 0.0, 0.0]
+      "radius": 0.01
+    - "center": [0.0, 0.0, 0.034]
+      "radius": 0.01
+    - "center": [0.0, 0.0, 0.017]
+      "radius": 0.01
+  rh_mfmiddle:
+    - "center": [0.0, 0.0, 0.002]
+      "radius": 0.01
+    - "center": [0.0, 0.0, 0.016]
+      "radius": 0.009
+  rh_rfproximal:
+    - "center": [0.0, 0.0, 0.0]
+      "radius": 0.01
+    - "center": [0.0, 0.0, 0.034]
+      "radius": 0.01
+    - "center": [0.0, 0.0, 0.017]
+      "radius": 0.01
+  rh_lfproximal:
+    - "center": [0.0, 0.0, 0.0]
+      "radius": 0.01
+    - "center": [0.0, 0.0, 0.034]
+      "radius": 0.01
+    - "center": [0.0, 0.0, 0.017]
+      "radius": 0.01
+  rh_thproximal:
+    - "center": [0.0, -0.002, 0.005]
+      "radius": 0.012
+    - "center": [0.0, 0.0, 0.037]
+      "radius": 0.012
+    - "center": [0.0, -0.001, 0.021]
+      "radius": 0.012
+  rh_rfmiddle:
+    - "center": [0.0, 0.0, 0.002]
+      "radius": 0.01
+    - "center": [0.0, 0.0, 0.016]
+      "radius": 0.009
+  rh_lfmiddle:
+    - "center": [0.0, 0.0, 0.002]
+      "radius": 0.01
+    - "center": [0.0, 0.0, 0.016]
+      "radius": 0.009
+  rh_thmiddle:
+    - "center": [0.001, 0.0, 0.012]
+      "radius": 0.011
+    - "center": [0.001, 0.0, 0.028]
+      "radius": 0.01
+  rh_lfmetacarpal:
+    - "center": [-0.025, 0.0, 0.038]
+      "radius": 0.012
+    - "center": [-0.012, 0.0, 0.019]
+      "radius": 0.012
+  rh_mfdistal:
+    - "center": [0.0, 0.001, 0.001]
+      "radius": 0.008
+    - "center": [0.0, 0.001, 0.012]
+      "radius": 0.008
+    - "center": [0.0, 0.001, 0.022]
+      "radius": 0.0075
+  rh_rfdistal:
+    - "center": [0.0, 0.001, 0.001]
+      "radius": 0.008
+    - "center": [0.0, 0.001, 0.012]
+      "radius": 0.008
+    - "center": [0.0, 0.001, 0.022]
+      "radius": 0.0075
+  rh_lfdistal:
+    - "center": [0.0, 0.001, 0.001]
+      "radius": 0.008
+    - "center": [0.0, 0.001, 0.012]
+      "radius": 0.008
+    - "center": [0.0, 0.001, 0.022]
+      "radius": 0.0075
+  rh_forearm:
+    - "center": [0.0, 0.0, 0.131]
+      "radius": 0.075
+    - "center": [0.0, 0.0, 0.039]
+      "radius": 0.075
+  rh_wrist:
+    - "center": [0.0, 0.0, 0.006]
+      "radius": 0.03
+  rh_thdistal:
+    - "center": [0.0, 0.001, 0.015]
+      "radius": 0.01
+    - "center": [0.0, 0.002, 0.027]
+      "radius": 0.008
+
+#<!--End hands.yml-->

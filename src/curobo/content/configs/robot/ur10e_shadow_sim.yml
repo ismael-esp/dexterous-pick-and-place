@@ -1,0 +1,207 @@
+##
+## Copyright (c) 2023 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+##
+## NVIDIA CORPORATION, its affiliates and licensors retain all intellectual
+## property and proprietary rights in and to this material, related
+## documentation and any modifications thereto. Any use, reproduction,
+## disclosure or distribution of this material and related documentation
+## without an express license agreement from NVIDIA CORPORATION or
+## its affiliates is strictly prohibited.
+##
+
+robot_cfg:
+  kinematics:
+    use_root_pose: False
+    hand_pose_transfer_path: "hand_pose_transfer/right_shadow_hand.yml"
+    grad_group_names: [
+      ['shoulder_pan_joint', 'shoulder_lift_joint', 'elbow_joint',
+        'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint','rh_WRJ2','rh_WRJ1'],
+      ['rh_FFJ4', 'rh_FFJ3', 'rh_FFJ2', 'rh_FFJ1',
+        'rh_MFJ4','rh_MFJ3', 'rh_MFJ2', 'rh_MFJ1',
+        'rh_RFJ4','rh_RFJ3', 'rh_RFJ2', 'rh_RFJ1',
+        'rh_LFJ5','rh_LFJ4', 'rh_LFJ3', 'rh_LFJ2', 'rh_LFJ1',
+        'rh_THJ5', 'rh_THJ4', 'rh_THJ3', 'rh_THJ2','rh_THJ1']
+    ]
+    tendon_joints: [['rh_FFJ2','rh_FFJ1'], ['rh_MFJ2','rh_MFJ1'], ['rh_RFJ2','rh_RFJ1'], ['rh_LFJ2','rh_LFJ1']]
+    usd_path: "robot/shadow_hand/ur10e_shadow_sim.usd"
+    usd_robot_root: "/robot"
+    isaac_usd_path: ""
+    usd_flip_joints: {}
+    usd_flip_joint_limits: []
+
+    urdf_path: "robot/shadow_hand/ur10e_shadow_sim.urdf"
+    asset_root_path: "robot/shadow_hand"
+    
+    base_link: "base_link"
+    ee_link: "rh_palm"
+    link_names: ["rh_thdistal", "rh_ffdistal", "rh_mfdistal", "rh_rfdistal", "rh_lfdistal"]
+    lock_joints: null
+    extra_links: null
+    
+    collision_link_names: [
+        "shoulder_link",
+        "upper_arm_link",
+        "forearm_link",
+        "wrist_1_link",
+        "wrist_2_link",
+        "wrist_3_link",
+
+        "rh_palm",
+        "rh_ffproximal",
+        "rh_ffmiddle",
+        "rh_ffdistal",
+        "rh_mfproximal",
+        "rh_mfmiddle",
+        "rh_rfproximal",
+        "rh_lfproximal",
+        "rh_thproximal",
+        "rh_rfmiddle",
+        "rh_lfmiddle",
+        "rh_thmiddle",
+        "rh_lfmetacarpal",
+        "rh_mfdistal",
+        "rh_rfdistal",
+        "rh_lfdistal",
+        "rh_forearm",
+        "rh_wrist",
+        "rh_thdistal",
+      ] # List[str]
+    collision_spheres: "spheres/ur10e_shadow.yml" #
+    collision_sphere_buffer: 0.00
+    extra_collision_spheres: {}
+    self_collision_ignore: {
+      'shoulder_link' : ['upper_arm_link'],
+      'upper_arm_link' : ['forearm_link'],
+      'forearm_link' : ['wrist_1_link'],
+      'wrist_1_link' : ['wrist_2_link'],
+      'wrist_2_link' : ['wrist_3_link'],
+      'wrist_3_link' : ['rh_forearm'],
+      #<!--maybe [].yml-->
+      
+      'rh_forearm' : ['rh_wrist'],
+      'rh_wrist' : ['rh_palm'],
+      'rh_palm' : ['rh_ffproximal','rh_mfproximal','rh_rfproximal','rh_lfproximal','rh_thproximal','rh_lfmetacarpal'],
+      'rh_ffproximal' : ['rh_ffmiddle'],
+      'rh_ffmiddle' : ['rh_ffdistal'],
+      'rh_ffdistal' : [],
+      'rh_mfproximal' : ['rh_mfmiddle'],
+      'rh_mfmiddle' : ['rh_mfdistal'],
+      'rh_mfdistal' : [],
+      'rh_rfproximal' : ['rh_rfmiddle'],
+      'rh_rfmiddle' : ['rh_rfdistal'],
+      'rh_rfdistal' : [],
+      'rh_thproximal' : ['rh_thmiddle'],
+      'rh_thmiddle' : ['rh_thdistal'],
+      'rh_thdistal' : [],
+      'rh_lfmetacarpal' : ['rh_lfproximal'],
+      'rh_lfproximal': ['rh_lfmiddle'],
+      'rh_lfmiddle' : ['rh_lfdistal'],
+      'rh_lfdistal' : [],
+    }
+    self_collision_buffer: {
+      'shoulder_link' : 0.07,
+      'upper_arm_link' : 0,
+      'forearm_link' : 0,
+      'wrist_1_link' : 0,
+      'wrist_2_link' : 0,
+      'wrist_3_link' : 0,
+
+      'rh_forearm' : 0,
+      'rh_wrist' : 0,
+      'rh_palm' : 0,
+      'rh_ffproximal' : 0,
+      'rh_ffmiddle' : 0,
+      'rh_ffdistal' : 0,
+      'rh_mfproximal' : 0,
+      'rh_mfmiddle' : 0,
+      'rh_mfdistal' : 0,
+      'rh_rfproximal' : 0,
+      'rh_rfmiddle' : 0,
+      'rh_rfdistal' : 0,
+      'rh_thproximal' : 0,
+      'rh_thmiddle' : 0,
+      'rh_thdistal' : 0,
+      'rh_lfmetacarpal' : 0,
+      'rh_lfproximal' : 0,
+      'rh_lfmiddle' : 0,
+      'rh_lfdistal' : 0,
+    } # Dict[str, float]
+
+    use_global_cumul: True
+    mesh_link_names: [
+        "base_link_inertia",
+        "shoulder_link",
+        "upper_arm_link",
+        "forearm_link",
+        "wrist_1_link",
+        "wrist_2_link",
+        "wrist_3_link",
+
+        "rh_forearm",
+        "rh_wrist",
+        "rh_palm",
+        "rh_ffproximal",
+        "rh_ffmiddle",
+        "rh_ffdistal",
+        "rh_mfproximal",
+        "rh_mfmiddle",
+        "rh_rfproximal",
+        "rh_lfproximal",
+        "rh_thproximal",
+        "rh_rfmiddle",
+        "rh_lfmiddle",
+        "rh_thmiddle",
+        "rh_lfmetacarpal",
+        "rh_mfdistal",
+        "rh_rfdistal",
+        "rh_lfdistal",
+        "rh_thdistal",
+      ] # List[str]
+
+    cspace:
+      joint_names: [
+                 'shoulder_pan_joint', 'shoulder_lift_joint', 'elbow_joint',
+                 'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint',
+
+                 'rh_WRJ2','rh_WRJ1',
+                 'rh_FFJ4', 'rh_FFJ3', 'rh_FFJ2', 'rh_FFJ1',
+                 'rh_MFJ4','rh_MFJ3', 'rh_MFJ2', 'rh_MFJ1',
+                 'rh_RFJ4','rh_RFJ3', 'rh_RFJ2', 'rh_RFJ1',
+                 'rh_LFJ5','rh_LFJ4', 'rh_LFJ3', 'rh_LFJ2', 'rh_LFJ1',
+                 'rh_THJ5', 'rh_THJ4', 'rh_THJ3', 'rh_THJ2','rh_THJ1',
+                 ] # List[str]6+24+6+24/8+22+8+22
+      retract_config: [
+                  0,0,0,
+                  0,0,0,
+
+                  0,0,
+                  0,0,0,0,
+                  0,0,0,0,
+                  0,0,0,0,
+                  0,0,0,0,0,
+                  0,0,0,0,0,             
+                  ] # List[float]
+      null_space_weight: [
+                  1,1,1,
+                  1,1,1,
+
+                  1,1,
+                  1,1,1,1,
+                  1,1,1,1,
+                  1,1,1,1,
+                  1,1,1,1,1,
+                  1,1,1,1,1,
+                  ] # List[str]
+      cspace_distance_weight: [
+                  1,1,1,
+                  1,1,1,
+
+                  1,1,
+                  1,1,1,1,
+                  1,1,1,1,
+                  1,1,1,1,
+                  1,1,1,1,1,
+                  1,1,1,1,1,          
+                  ] # List[str]
+      max_jerk: 500.0
+      max_acceleration: 15.0

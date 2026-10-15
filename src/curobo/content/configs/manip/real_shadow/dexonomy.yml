@@ -1,0 +1,12 @@
+world:
+  type: dexonomy
+  template_path: /mnt/disk1/jiayichen/code/Dexonomy/output/debug_real_shadow/grasp_data/**/*_grasp.npy
+  start: 
+  end: 
+
+robot_file: "right_shadow_hand_real.yml"
+robot_file_with_arm: "ur10e_shadow_real.yml"
+
+exp_name: 'debug'
+
+mogen_init: [0.4227, -1.5991, -1.8872, -3.0432, -0.9848,  3.2433,  0.1738, -0.2078, 0,0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,0]

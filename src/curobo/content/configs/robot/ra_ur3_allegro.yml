@@ -1,0 +1,153 @@
+##
+## Right UR3 + right Allegro combined robot config (22 DOF: 6 arm + 16 hand).
+## URDF uses `ra_` prefix on every link and joint.
+##
+
+robot_cfg:
+  kinematics:
+    use_root_pose: False
+    hand_pose_transfer_path: "hand_pose_transfer/allegro.yml"
+    grad_group_names: [
+      ['ra_shoulder_pan_joint', 'ra_shoulder_lift_joint', 'ra_elbow_joint',
+        'ra_wrist_1_joint', 'ra_wrist_2_joint', 'ra_wrist_3_joint'],
+      ['ra_joint_0_0', 'ra_joint_1_0', 'ra_joint_2_0', 'ra_joint_3_0',
+        'ra_joint_4_0', 'ra_joint_5_0', 'ra_joint_6_0', 'ra_joint_7_0',
+        'ra_joint_8_0', 'ra_joint_9_0', 'ra_joint_10_0', 'ra_joint_11_0',
+        'ra_joint_12_0', 'ra_joint_13_0', 'ra_joint_14_0', 'ra_joint_15_0']
+    ]
+    tendon_joints: []
+
+    urdf_path: "robot/ur_description/ra_ur3_allegro_overhead.urdf"
+    asset_root_path: "robot/ur_description"
+
+    base_link: "world"
+    ee_link: "ra_palm_link"
+    link_names: ["ra_link_3_0_tip", "ra_link_7_0_tip", "ra_link_11_0_tip", "ra_link_15_0_tip"]
+    lock_joints: null
+    extra_links: null
+
+    collision_link_names: [
+        "ra_shoulder_link",
+        "ra_upper_arm_link",
+        "ra_forearm_link",
+        "ra_wrist_1_link",
+        "ra_wrist_2_link",
+        "ra_wrist_3_link",
+
+        "ra_palm_link",
+        "ra_link_1_0",
+        "ra_link_2_0",
+        "ra_link_3_0",
+        "ra_link_3_0_tip",
+        "ra_link_5_0",
+        "ra_link_6_0",
+        "ra_link_7_0",
+        "ra_link_7_0_tip",
+        "ra_link_9_0",
+        "ra_link_10_0",
+        "ra_link_11_0",
+        "ra_link_11_0_tip",
+        "ra_link_12_0",
+        "ra_link_13_0",
+        "ra_link_14_0",
+        "ra_link_15_0",
+        "ra_link_15_0_tip",
+      ]
+    collision_spheres: "spheres/ra_ur3_allegro.yml"
+    collision_sphere_buffer: 0.00
+    extra_collision_spheres: {}
+    self_collision_ignore: {
+      'ra_shoulder_link':    ['ra_upper_arm_link'],
+      'ra_upper_arm_link':   ['ra_forearm_link'],
+      'ra_forearm_link':     ['ra_wrist_1_link'],
+      'ra_wrist_1_link':     ['ra_wrist_2_link'],
+      'ra_wrist_2_link':     ['ra_wrist_3_link'],
+      'ra_wrist_3_link':     ['ra_palm_link'],
+      'ra_palm_link':        ['ra_link_1_0', 'ra_link_5_0', 'ra_link_9_0', 'ra_link_12_0'],
+      'ra_link_1_0':         ['ra_link_2_0'],
+      'ra_link_2_0':         ['ra_link_3_0'],
+      'ra_link_3_0':         ['ra_link_3_0_tip'],
+      'ra_link_5_0':         ['ra_link_6_0'],
+      'ra_link_6_0':         ['ra_link_7_0'],
+      'ra_link_7_0':         ['ra_link_7_0_tip'],
+      'ra_link_9_0':         ['ra_link_10_0'],
+      'ra_link_10_0':        ['ra_link_11_0'],
+      'ra_link_11_0':        ['ra_link_11_0_tip'],
+      'ra_link_12_0':        ['ra_link_13_0', 'ra_link_14_0'],
+      'ra_link_13_0':        ['ra_link_14_0'],
+      'ra_link_14_0':        ['ra_link_15_0'],
+      'ra_link_15_0':        ['ra_link_15_0_tip'],
+    }
+    self_collision_buffer:
+      ra_shoulder_link: 0.0
+      ra_upper_arm_link: 0.0
+      ra_forearm_link: 0.0
+      ra_wrist_1_link: 0.0
+      ra_wrist_2_link: 0.0
+      ra_wrist_3_link: 0.0
+      ra_palm_link: 0.0
+      ra_link_1_0: 0.0
+      ra_link_2_0: 0.0
+      ra_link_3_0: 0.002
+      ra_link_3_0_tip: 0.0
+      ra_link_5_0: 0.0
+      ra_link_6_0: 0.0
+      ra_link_7_0: 0.002
+      ra_link_7_0_tip: 0.0
+      ra_link_9_0: 0.0
+      ra_link_10_0: 0.0
+      ra_link_11_0: 0.002
+      ra_link_11_0_tip: 0.0
+      ra_link_12_0: 0.0
+      ra_link_13_0: 0.0
+      ra_link_14_0: 0.0
+      ra_link_15_0: 0.002
+      ra_link_15_0_tip: 0.0
+    mesh_link_names: [
+        # "ra_base_link" omitted — it has no visual mesh in the URDF, and with
+        # the world→ra_base_link wrapper, yourdfpy no longer treats it as the
+        # kinematic root so USD export fails on it.
+        "ra_shoulder_link",
+        "ra_upper_arm_link",
+        "ra_forearm_link",
+        "ra_wrist_1_link",
+        "ra_wrist_2_link",
+        "ra_wrist_3_link",
+        "ra_palm_link",
+        "ra_link_0_0", "ra_link_1_0", "ra_link_2_0", "ra_link_3_0", "ra_link_3_0_tip",
+        "ra_link_4_0", "ra_link_5_0", "ra_link_6_0", "ra_link_7_0", "ra_link_7_0_tip",
+        "ra_link_8_0", "ra_link_9_0", "ra_link_10_0", "ra_link_11_0", "ra_link_11_0_tip",
+        "ra_link_12_0", "ra_link_13_0", "ra_link_14_0", "ra_link_15_0", "ra_link_15_0_tip",
+      ]
+    cspace:
+      joint_names:
+        [
+          "ra_shoulder_pan_joint", "ra_shoulder_lift_joint", "ra_elbow_joint",
+          "ra_wrist_1_joint", "ra_wrist_2_joint", "ra_wrist_3_joint",
+          "ra_joint_0_0", "ra_joint_1_0", "ra_joint_2_0", "ra_joint_3_0",
+          "ra_joint_4_0", "ra_joint_5_0", "ra_joint_6_0", "ra_joint_7_0",
+          "ra_joint_8_0", "ra_joint_9_0", "ra_joint_10_0", "ra_joint_11_0",
+          "ra_joint_12_0", "ra_joint_13_0", "ra_joint_14_0", "ra_joint_15_0",
+        ]
+      # Physical home pose (from isaaclab_dualarm/utils/common_cfg.py make_tshape_right_robot_cfg):
+      # arm joints in radians = math.radians(27.33, -43.98, 98.18, -232.88, -71.98, 223.84)
+      # hand joints = stock Allegro open-grasp retract
+      retract_config: [
+          0.47700070,  -0.76760139,   1.71352310,  -4.06449313,  -1.25647330,   3.90605361,
+          0.0, 0.7242903113365173, 0.7242903113365173, 0.7242903113365173,
+          0.0, 0.7242903113365173, 0.7242903113365173, 0.7242903113365173,
+          0.0, 0.7242903113365173, 0.7242903113365173, 0.9249972105026245,
+          0.4101402759552002, 0.7242903113365173, 0.7417430877685547, 0.7242903113365173,
+        ]
+      # Low null-space weight on arm joints lets IK find solutions far from the
+      # home pose (e.g. wrist wrap-around) — necessary because the overhead
+      # mount's reachable set for top-down grasps is not a small neighborhood
+      # around the home config.
+      null_space_weight: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01,
+                          1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                          1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      cspace_distance_weight: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                               0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+                               0.1, 0.1, 0.1, 0.1, 1.1, 1.1, 0.1, 0.1]
+      max_acceleration: 15.0
+      max_jerk: 500.0

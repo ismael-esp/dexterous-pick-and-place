@@ -1,0 +1,163 @@
+##
+## Copyright (c) 2023 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+##
+## NVIDIA CORPORATION, its affiliates and licensors retain all intellectual
+## property and proprietary rights in and to this material, related
+## documentation and any modifications thereto. Any use, reproduction,
+## disclosure or distribution of this material and related documentation
+## without an express license agreement from NVIDIA CORPORATION or
+## its affiliates is strictly prohibited.
+##
+robot_cfg:
+  robot_color: [0.0544794, 0.376262, 0.913099, 1.0]
+  kinematics:
+    base_link: palm_link
+    use_root_pose: True
+    hand_pose_transfer_path: "hand_pose_transfer/allegro_biotac.yml"
+    collision_link_names:
+      - palm_link
+      - index_link_1
+      - index_link_2
+      - index_link_3
+      - middle_link_1
+      - middle_link_2
+      - middle_link_3
+      - ring_link_1
+      - ring_link_2
+      - ring_link_3
+      - thumb_link_2
+      - thumb_link_3
+    collision_sphere_buffer: 0.005
+    collision_spheres: spheres/allegro_biotac.yml
+    ee_link: index_link_3
+    link_names:
+      - index_link_3
+      - middle_link_3
+      - ring_link_3
+      - thumb_link_3
+    self_collision_buffer:
+      index_link_1: -0.0
+      index_link_2: -0.0
+      index_link_3: 0.0
+      middle_link_1: 0.0
+      middle_link_2: 0.0
+      middle_link_3: 0.0
+      palm_link: 0.0
+      ring_link_1: 0.0
+      ring_link_2: 0.0
+      ring_link_3: 0.0
+      thumb_link_2: 0.0
+      thumb_link_3: 0.0
+    self_collision_ignore: {
+        palm_link:
+          [
+            index_link_1,
+            index_link_2,
+            middle_link_1,
+            middle_link_2,
+            ring_link_1,
+            ring_link_2,
+            thumb_link_2,
+          ],
+        index_link_1: [index_link_2, middle_link_1, middle_link_2],
+        index_link_2: [index_link_3],
+        middle_link_1: [middle_link_2, ring_link_1, ring_link_2],
+        middle_link_2: [middle_link_3],
+        #middle_link_3: [],
+        ring_link_1: [ring_link_2],
+        ring_link_2: [ring_link_3],
+        thumb_link_2: [thumb_link_3],
+      }
+    urdf_path: robot/allegro_biotac_description/allegro_biotac.urdf
+    asset_root_path: robot/allegro_biotac_description
+    usd_path: robot/allegro_biotac_description/allegro_biotac.usda
+    usd_robot_root: /allegro_biotac
+    cspace:
+      joint_names:
+        [
+          "index_joint_0",
+          "index_joint_1",
+          "index_joint_2",
+          "index_joint_3",
+          "middle_joint_0",
+          "middle_joint_1",
+          "middle_joint_2",
+          "middle_joint_3",
+          "ring_joint_0",
+          "ring_joint_1",
+          "ring_joint_2",
+          "ring_joint_3",
+          "thumb_joint_0",
+          "thumb_joint_1",
+          "thumb_joint_2",
+          "thumb_joint_3",
+        ]
+      cspace_distance_weight:
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 0.1
+        - 1.1
+        - 1.1
+        - 0.1
+        - 0.1
+
+      null_space_weight:
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0 #
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+      retract_config:
+        - 0.0
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.0
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.0
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.9249972105026245
+        - 0.4101402759552002
+        - 0.7242903113365173
+        - 0.7417430877685547
+        - 0.7242903113365173
+      max_acceleration: 15.0
+      max_jerk: 500.0
+    mesh_link_names:
+      [
+        "palm_link",
+       "index_link_1",
+       "index_link_2",
+       "index_link_3",
+       "middle_link_1",
+       "middle_link_2",
+       "middle_link_3",
+       "ring_link_1",
+       "ring_link_2",
+       "ring_link_3",
+       "thumb_link_2",
+       "thumb_link_3",
+      ]

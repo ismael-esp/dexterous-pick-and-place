@@ -1,0 +1,114 @@
+##
+## Floating right Allegro (ra_-prefixed link names) — shares URDF with ra_ur3_allegro.yml
+## but treats the palm as the base for floating-hand grasp synthesis.
+## Use this as `robot_file` when `robot_file_with_arm: ra_ur3_allegro.yml`.
+##
+robot_cfg:
+  robot_color: [0.0544794, 0.376262, 0.913099, 1.0]
+  kinematics:
+    base_link: ra_palm_link
+    use_root_pose: True
+    hand_pose_transfer_path: "hand_pose_transfer/ra_allegro.yml"
+    collision_link_names:
+      - ra_palm_link
+      - ra_link_1_0
+      - ra_link_2_0
+      - ra_link_3_0
+      - ra_link_3_0_tip
+      - ra_link_5_0
+      - ra_link_6_0
+      - ra_link_7_0
+      - ra_link_7_0_tip
+      - ra_link_9_0
+      - ra_link_10_0
+      - ra_link_11_0
+      - ra_link_11_0_tip
+      - ra_link_12_0
+      - ra_link_13_0
+      - ra_link_14_0
+      - ra_link_15_0
+      - ra_link_15_0_tip
+    collision_sphere_buffer: 0.0
+    collision_spheres: spheres/ra_allegro.yml
+    ee_link: ra_link_3_0_tip
+    link_names:
+      - ra_link_3_0_tip
+      - ra_link_7_0_tip
+      - ra_link_11_0_tip
+      - ra_link_15_0_tip
+    self_collision_buffer:
+      ra_palm_link: 0.0
+      ra_link_1_0: 0.0
+      ra_link_2_0: 0.0
+      ra_link_3_0: 0.002
+      ra_link_3_0_tip: 0.0
+      ra_link_5_0: 0.0
+      ra_link_6_0: 0.0
+      ra_link_7_0: 0.002
+      ra_link_7_0_tip: 0.0
+      ra_link_9_0: 0.0
+      ra_link_10_0: 0.0
+      ra_link_11_0: 0.002
+      ra_link_11_0_tip: 0.0
+      ra_link_12_0: 0.0
+      ra_link_13_0: 0.0
+      ra_link_14_0: 0.0
+      ra_link_15_0: 0.002
+      ra_link_15_0_tip: 0.0
+    self_collision_ignore: {
+        ra_palm_link: [ra_link_1_0, ra_link_5_0, ra_link_9_0, ra_link_12_0],
+        ra_link_1_0: [ra_link_2_0],
+        ra_link_2_0: [ra_link_3_0],
+        ra_link_3_0: [ra_link_3_0_tip],
+        ra_link_5_0: [ra_link_6_0],
+        ra_link_6_0: [ra_link_7_0],
+        ra_link_7_0: [ra_link_7_0_tip],
+        ra_link_9_0: [ra_link_10_0],
+        ra_link_10_0: [ra_link_11_0],
+        ra_link_11_0: [ra_link_11_0_tip],
+        ra_link_12_0: [ra_link_13_0, ra_link_14_0],
+        ra_link_13_0: [ra_link_14_0],
+        ra_link_14_0: [ra_link_15_0],
+        ra_link_15_0: [ra_link_15_0_tip],
+      }
+    urdf_path: robot/ur_description/ra_ur3_allegro_isaac_.urdf
+    asset_root_path: robot/ur_description
+    cspace:
+      joint_names:
+        [
+          "ra_joint_0_0", "ra_joint_1_0", "ra_joint_2_0", "ra_joint_3_0",
+          "ra_joint_4_0", "ra_joint_5_0", "ra_joint_6_0", "ra_joint_7_0",
+          "ra_joint_8_0", "ra_joint_9_0", "ra_joint_10_0", "ra_joint_11_0",
+          "ra_joint_12_0", "ra_joint_13_0", "ra_joint_14_0", "ra_joint_15_0",
+        ]
+      cspace_distance_weight: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+                               0.1, 0.1, 0.1, 0.1, 1.1, 1.1, 0.1, 0.1]
+      null_space_weight: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                          1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      retract_config:
+        - 0.0
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.0
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.0
+        - 0.7242903113365173
+        - 0.7242903113365173
+        - 0.9249972105026245
+        - 0.4101402759552002
+        - 0.7242903113365173
+        - 0.7417430877685547
+        - 0.7242903113365173
+      max_acceleration: 15.0
+      max_jerk: 500.0
+    mesh_link_names:
+      [
+        "ra_palm_link",
+        "ra_link_0_0", "ra_link_1_0", "ra_link_2_0", "ra_link_3_0", "ra_link_3_0_tip",
+        "ra_link_4_0", "ra_link_5_0", "ra_link_6_0", "ra_link_7_0", "ra_link_7_0_tip",
+        "ra_link_8_0", "ra_link_9_0", "ra_link_10_0", "ra_link_11_0", "ra_link_11_0_tip",
+        "ra_link_12_0", "ra_link_13_0", "ra_link_14_0", "ra_link_15_0", "ra_link_15_0_tip",
+      ]

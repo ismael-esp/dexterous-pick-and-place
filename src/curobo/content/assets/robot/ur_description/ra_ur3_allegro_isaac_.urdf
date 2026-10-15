@@ -1,0 +1,1182 @@
+<?xml version="1.0" ?>
+
+<robot name="ra_ur3">
+
+  <ros2_control name="ra_ur3" type="system">
+    <hardware>
+      <plugin>ur_robot_driver/URPositionHardwareInterface</plugin>
+      <param name="robot_ip">192.168.0.120</param>
+      <param name="script_filename">/opt/ros/jazzy/share/ur_client_library/resources/external_control.urscript</param>
+      <param name="output_recipe_filename">/home/robot/ros2_ws/install/ur_robot_driver/share/ur_robot_driver/resources/rtde_output_recipe.txt</param>
+      <param name="input_recipe_filename">/home/robot/ros2_ws/install/ur_robot_driver/share/ur_robot_driver/resources/rtde_input_recipe.txt</param>
+      <param name="headless_mode">False</param>
+      <param name="reverse_port">50001</param>
+      <param name="script_sender_port">50002</param>
+      <param name="reverse_ip">0.0.0.0</param>
+      <param name="script_command_port">50004</param>
+      <param name="trajectory_port">50003</param>
+      <param name="tf_prefix">ra_</param>
+      <param name="non_blocking_read">True</param>
+      <param name="servoj_gain">2000</param>
+      <param name="servoj_lookahead_time">0.03</param>
+      <param name="use_tool_communication">False</param>
+      <param name="kinematics/hash">calib_9122066269688285636</param>
+      <param name="tool_voltage">0</param>
+      <param name="tool_parity">0</param>
+      <param name="tool_baud_rate">115200</param>
+      <param name="tool_stop_bits">1</param>
+      <param name="tool_rx_idle_chars">1.5</param>
+      <param name="tool_tx_idle_chars">3.5</param>
+      <param name="tool_device_name">/tmp/ttyUR</param>
+      <param name="tool_tcp_port">54321</param>
+      <param name="robot_receive_timeout">0.04</param>
+    </hardware>
+
+    <joint name="ra_shoulder_pan_joint">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <!-- initial position for the mock system and simulation -->
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="effort">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+    <joint name="ra_shoulder_lift_joint">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <!-- initial position for the mock system and simulation -->
+        <param name="initial_value">-1.57</param>
+      </state_interface>
+      <state_interface name="velocity">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="effort">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+    <joint name="ra_elbow_joint">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <!-- initial position for the mock system and simulation -->
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="effort">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+    <joint name="ra_wrist_1_joint">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <!-- initial position for the mock system and simulation -->
+        <param name="initial_value">-1.57</param>
+      </state_interface>
+      <state_interface name="velocity">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="effort">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+    <joint name="ra_wrist_2_joint">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <!-- initial position for the mock system and simulation -->
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="effort">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+    <joint name="ra_wrist_3_joint">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <!-- initial position for the mock system and simulation -->
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="effort">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+    <sensor name="ra_tcp_fts_sensor">
+      <state_interface name="force.x"/>
+      <state_interface name="force.y"/>
+      <state_interface name="force.z"/>
+      <state_interface name="torque.x"/>
+      <state_interface name="torque.y"/>
+      <state_interface name="torque.z"/>
+    </sensor>
+    <sensor name="ra_tcp_pose">
+      <state_interface name="position.x"/>
+      <state_interface name="position.y"/>
+      <state_interface name="position.z"/>
+      <state_interface name="orientation.x"/>
+      <state_interface name="orientation.y"/>
+      <state_interface name="orientation.z"/>
+      <state_interface name="orientation.w"/>
+    </sensor>
+
+    <!-- NOTE The following are joints used only for testing with mock hardware and will change in the future -->
+    <gpio name="ra_speed_scaling">
+      <state_interface name="speed_scaling_factor">
+        <param name="initial_value">1.0</param>
+      </state_interface>
+      <command_interface name="target_speed_fraction_cmd"/>
+      <command_interface name="target_speed_fraction_async_success"/>
+    </gpio>
+    <gpio name="ra_gpio">
+      <command_interface name="standard_digital_output_cmd_0"/>
+      <command_interface name="standard_digital_output_cmd_1"/>
+      <command_interface name="standard_digital_output_cmd_2"/>
+      <command_interface name="standard_digital_output_cmd_3"/>
+      <command_interface name="standard_digital_output_cmd_4"/>
+      <command_interface name="standard_digital_output_cmd_5"/>
+      <command_interface name="standard_digital_output_cmd_6"/>
+      <command_interface name="standard_digital_output_cmd_7"/>
+      <command_interface name="standard_digital_output_cmd_8"/>
+      <command_interface name="standard_digital_output_cmd_9"/>
+      <command_interface name="standard_digital_output_cmd_10"/>
+      <command_interface name="standard_digital_output_cmd_11"/>
+      <command_interface name="standard_digital_output_cmd_12"/>
+      <command_interface name="standard_digital_output_cmd_13"/>
+      <command_interface name="standard_digital_output_cmd_14"/>
+      <command_interface name="standard_digital_output_cmd_15"/>
+      <command_interface name="standard_digital_output_cmd_16"/>
+      <command_interface name="standard_digital_output_cmd_17"/>
+      <command_interface name="standard_analog_output_cmd_0"/>
+      <command_interface name="standard_analog_output_cmd_1"/>
+      <command_interface name="analog_output_domain_cmd"/>
+      <command_interface name="tool_voltage_cmd"/>
+      <command_interface name="io_async_success"/>
+      <state_interface name="digital_output_0"/>
+      <state_interface name="digital_output_1"/>
+      <state_interface name="digital_output_2"/>
+      <state_interface name="digital_output_3"/>
+      <state_interface name="digital_output_4"/>
+      <state_interface name="digital_output_5"/>
+      <state_interface name="digital_output_6"/>
+      <state_interface name="digital_output_7"/>
+      <state_interface name="digital_output_8"/>
+      <state_interface name="digital_output_9"/>
+      <state_interface name="digital_output_10"/>
+      <state_interface name="digital_output_11"/>
+      <state_interface name="digital_output_12"/>
+      <state_interface name="digital_output_13"/>
+      <state_interface name="digital_output_14"/>
+      <state_interface name="digital_output_15"/>
+      <state_interface name="digital_output_16"/>
+      <state_interface name="digital_output_17"/>
+      <state_interface name="digital_input_0"/>
+      <state_interface name="digital_input_1"/>
+      <state_interface name="digital_input_2"/>
+      <state_interface name="digital_input_3"/>
+      <state_interface name="digital_input_4"/>
+      <state_interface name="digital_input_5"/>
+      <state_interface name="digital_input_6"/>
+      <state_interface name="digital_input_7"/>
+      <state_interface name="digital_input_8"/>
+      <state_interface name="digital_input_9"/>
+      <state_interface name="digital_input_10"/>
+      <state_interface name="digital_input_11"/>
+      <state_interface name="digital_input_12"/>
+      <state_interface name="digital_input_13"/>
+      <state_interface name="digital_input_14"/>
+      <state_interface name="digital_input_15"/>
+      <state_interface name="digital_input_16"/>
+      <state_interface name="digital_input_17"/>
+      <state_interface name="standard_analog_output_0"/>
+      <state_interface name="standard_analog_output_1"/>
+      <state_interface name="standard_analog_input_0"/>
+      <state_interface name="standard_analog_input_1"/>
+      <state_interface name="analog_io_type_0"/>
+      <state_interface name="analog_io_type_1"/>
+      <state_interface name="analog_io_type_2"/>
+      <state_interface name="analog_io_type_3"/>
+      <state_interface name="tool_mode"/>
+      <state_interface name="tool_output_voltage"/>
+      <state_interface name="tool_output_current"/>
+      <state_interface name="tool_temperature"/>
+      <state_interface name="tool_analog_input_0"/>
+      <state_interface name="tool_analog_input_1"/>
+      <state_interface name="tool_analog_input_type_0"/>
+      <state_interface name="tool_analog_input_type_1"/>
+      <state_interface name="robot_mode"/>
+      <state_interface name="robot_status_bit_0"/>
+      <state_interface name="robot_status_bit_1"/>
+      <state_interface name="robot_status_bit_2"/>
+      <state_interface name="robot_status_bit_3"/>
+      <state_interface name="safety_mode"/>
+      <state_interface name="safety_status_bit_0"/>
+      <state_interface name="safety_status_bit_1"/>
+      <state_interface name="safety_status_bit_2"/>
+      <state_interface name="safety_status_bit_3"/>
+      <state_interface name="safety_status_bit_4"/>
+      <state_interface name="safety_status_bit_5"/>
+      <state_interface name="safety_status_bit_6"/>
+      <state_interface name="safety_status_bit_7"/>
+      <state_interface name="safety_status_bit_8"/>
+      <state_interface name="safety_status_bit_9"/>
+      <state_interface name="safety_status_bit_10"/>
+      <state_interface name="program_running"/>
+    </gpio>
+    <gpio name="ra_payload">
+      <command_interface name="mass"/>
+      <command_interface name="cog.x"/>
+      <command_interface name="cog.y"/>
+      <command_interface name="cog.z"/>
+      <command_interface name="payload_async_success"/>
+    </gpio>
+    <gpio name="ra_resend_robot_program">
+      <command_interface name="resend_robot_program_cmd"/>
+      <command_interface name="resend_robot_program_async_success"/>
+    </gpio>
+    <gpio name="ra_hand_back_control">
+      <command_interface name="hand_back_control_cmd"/>
+      <command_interface name="hand_back_control_async_success"/>
+    </gpio>
+    <gpio name="ra_zero_ftsensor">
+      <command_interface name="zero_ftsensor_cmd"/>
+      <command_interface name="zero_ftsensor_async_success"/>
+    </gpio>
+    <gpio name="ra_freedrive_mode">
+      <command_interface name="async_success"/>
+      <command_interface name="enable"/>
+      <command_interface name="abort"/>
+    </gpio>
+    <gpio name="ra_tool_contact">
+      <command_interface name="tool_contact_set_state"/>
+      <state_interface name="tool_contact_result"/>
+      <state_interface name="tool_contact_state"/>
+    </gpio>
+    <gpio name="ra_system_interface">
+      <state_interface name="initialized"/>
+    </gpio>
+    <gpio name="ra_force_mode">
+      <command_interface name="task_frame_x"/>
+      <command_interface name="task_frame_y"/>
+      <command_interface name="task_frame_z"/>
+      <command_interface name="task_frame_rx"/>
+      <command_interface name="task_frame_ry"/>
+      <command_interface name="task_frame_rz"/>
+      <command_interface name="selection_vector_x"/>
+      <command_interface name="selection_vector_y"/>
+      <command_interface name="selection_vector_z"/>
+      <command_interface name="selection_vector_rx"/>
+      <command_interface name="selection_vector_ry"/>
+      <command_interface name="selection_vector_rz"/>
+      <command_interface name="wrench_x"/>
+      <command_interface name="wrench_y"/>
+      <command_interface name="wrench_z"/>
+      <command_interface name="wrench_rx"/>
+      <command_interface name="wrench_ry"/>
+      <command_interface name="wrench_rz"/>
+      <command_interface name="limits_x"/>
+      <command_interface name="limits_y"/>
+      <command_interface name="limits_z"/>
+      <command_interface name="limits_rx"/>
+      <command_interface name="limits_ry"/>
+      <command_interface name="limits_rz"/>
+      <command_interface name="type"/>
+      <command_interface name="damping"/>
+      <command_interface name="gain_scaling"/>
+      <command_interface name="disable_cmd"/>
+      <command_interface name="force_mode_async_success"/>
+    </gpio>
+    <gpio name="ra_trajectory_passthrough">
+      <command_interface name="setpoint_positions_0"/>
+      <command_interface name="setpoint_positions_1"/>
+      <command_interface name="setpoint_positions_2"/>
+      <command_interface name="setpoint_positions_3"/>
+      <command_interface name="setpoint_positions_4"/>
+      <command_interface name="setpoint_positions_5"/>
+      <command_interface name="setpoint_velocities_0"/>
+      <command_interface name="setpoint_velocities_1"/>
+      <command_interface name="setpoint_velocities_2"/>
+      <command_interface name="setpoint_velocities_3"/>
+      <command_interface name="setpoint_velocities_4"/>
+      <command_interface name="setpoint_velocities_5"/>
+      <command_interface name="setpoint_accelerations_0"/>
+      <command_interface name="setpoint_accelerations_1"/>
+      <command_interface name="setpoint_accelerations_2"/>
+      <command_interface name="setpoint_accelerations_3"/>
+      <command_interface name="setpoint_accelerations_4"/>
+      <command_interface name="setpoint_accelerations_5"/>
+      <command_interface name="transfer_state"/>
+      <command_interface name="time_from_start"/>
+      <command_interface name="abort"/>
+      <command_interface name="trajectory_size"/>
+    </gpio>
+    <gpio name="ra_get_robot_software_version">
+      <state_interface name="get_version_major"/>
+      <state_interface name="get_version_minor"/>
+      <state_interface name="get_version_build"/>
+      <state_interface name="get_version_bugfix"/>
+    </gpio>
+  </ros2_control>
+
+
+  <link name="ra_base_link"/>
+  <link name="ra_base_link_inertia">
+    <visual>
+      <origin rpy="0 0 3.141592653589793" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/ur3/visual/base.dae"/>
+      </geometry>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 3.141592653589793" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/ur3/collision/base.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="2.0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.0030531654454" ixy="0.0" ixz="0.0" iyy="0.0030531654454" iyz="0.0" izz="0.005625"/>
+    </inertial>
+  </link>
+  <link name="ra_shoulder_link">
+    <visual>
+      <origin rpy="0 0 3.141592653589793" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/ur3/visual/shoulder.dae"/>
+      </geometry>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 3.141592653589793" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/ur3/collision/shoulder.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="2.0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.008093163429399999" ixy="0.0" ixz="0.0" iyy="0.008093163429399999" iyz="0.0" izz="0.005625"/>
+    </inertial>
+  </link>
+  <link name="ra_upper_arm_link">
+    <visual>
+      <origin rpy="1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0.1198"/>
+      <geometry>
+        <mesh filename="meshes/ur3/visual/upperarm.dae"/>
+      </geometry>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0.1198"/>
+      <geometry>
+        <mesh filename="meshes/ur3/collision/upperarm.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="3.42"/>
+      <origin rpy="0 1.5707963267948966 0" xyz="-0.121825 0.0 0.12"/>
+      <inertia ixx="0.021728483221103233" ixy="0.0" ixz="0.0" iyy="0.021728483221103233" iyz="0.0" izz="0.00961875"/>
+    </inertial>
+  </link>
+  <link name="ra_forearm_link">
+    <visual>
+      <origin rpy="1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0.0275"/>
+      <geometry>
+        <mesh filename="meshes/ur3/visual/forearm.dae"/>
+      </geometry>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0.0275"/>
+      <geometry>
+        <mesh filename="meshes/ur3/collision/forearm.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.26"/>
+      <origin rpy="0 1.5707963267948966 0" xyz="-0.106625 0.0 0.0275"/>
+      <inertia ixx="0.006546806443776375" ixy="0.0" ixz="0.0" iyy="0.006546806443776375" iyz="0.0" izz="0.00354375"/>
+    </inertial>
+  </link>
+  <link name="ra_wrist_1_link">
+    <visual>
+      <origin rpy="1.5707963267948966 0 0" xyz="0 0 -0.085"/>
+      <geometry>
+        <mesh filename="meshes/ur3/visual/wrist1.dae"/>
+      </geometry>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="1.5707963267948966 0 0" xyz="0 0 -0.085"/>
+      <geometry>
+        <mesh filename="meshes/ur3/collision/wrist1.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.8"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.0016106408557434" ixy="0.0" ixz="0.0" iyy="0.0016106408557434" iyz="0.0" izz="0.00225"/>
+    </inertial>
+  </link>
+  <link name="ra_wrist_2_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 -0.085"/>
+      <geometry>
+        <mesh filename="meshes/ur3/visual/wrist2.dae"/>
+      </geometry>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -0.085"/>
+      <geometry>
+        <mesh filename="meshes/ur3/collision/wrist2.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.8"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.0015721733711303997" ixy="0.0" ixz="0.0" iyy="0.0015721733711303997" iyz="0.0" izz="0.00225"/>
+    </inertial>
+  </link>
+  <link name="ra_wrist_3_link">
+    <visual>
+      <origin rpy="1.5707963267948966 0 0" xyz="0 -0.00255 -0.082"/>
+      <geometry>
+        <mesh filename="meshes/ur3/visual/wrist3.dae"/>
+      </geometry>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="1.5707963267948966 0 0" xyz="0 -0.00255 -0.082"/>
+      <geometry>
+        <mesh filename="meshes/ur3/collision/wrist3.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.35"/>
+      <origin rpy="0 0 0" xyz="0.0 0.0 -0.02"/>
+      <inertia ixx="0.00013626661215999998" ixy="0.0" ixz="0.0" iyy="0.00013626661215999998" iyz="0.0" izz="0.0001792"/>
+    </inertial>
+  </link>
+  <!-- joints - main serial chain -->
+  <joint name="ra_base_link_base_link_inertia" type="fixed">
+    <parent link="ra_base_link"/>
+    <child link="ra_base_link_inertia"/>
+    <origin rpy="0 0 3.141592653589793" xyz="0 0 0"/>
+  </joint>
+  <joint name="ra_shoulder_pan_joint" type="revolute">
+    <parent link="ra_base_link_inertia"/>
+    <child link="ra_shoulder_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0.1519"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="56.0" lower="-6.283185307179586" upper="6.283185307179586" velocity="3.141592653589793"/>
+    <!-- <safety_controller k_position="20" k_velocity="0.0" soft_lower_limit="-6.133185307179586" soft_upper_limit="6.133185307179586"/> -->
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="ra_shoulder_lift_joint" type="revolute">
+    <parent link="ra_shoulder_link"/>
+    <child link="ra_upper_arm_link"/>
+    <origin rpy="1.570796327 0 0" xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="56.0" lower="-6.283185307179586" upper="6.283185307179586" velocity="3.141592653589793"/>
+    <!-- <safety_controller k_position="20" k_velocity="0.0" soft_lower_limit="-6.133185307179586" soft_upper_limit="6.133185307179586"/> -->
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="ra_elbow_joint" type="revolute">
+    <parent link="ra_upper_arm_link"/>
+    <child link="ra_forearm_link"/>
+    <origin rpy="0 0 0" xyz="-0.24365 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="28.0" lower="-3.141592653589793" upper="3.141592653589793" velocity="3.141592653589793"/>
+    <!-- <safety_controller k_position="20" k_velocity="0.0" soft_lower_limit="-2.991592653589793" soft_upper_limit="2.991592653589793"/> -->
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="ra_wrist_1_joint" type="revolute">
+    <parent link="ra_forearm_link"/>
+    <child link="ra_wrist_1_link"/>
+    <origin rpy="0 0 0" xyz="-0.21325 0 0.11235"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="12.0" lower="-6.283185307179586" upper="6.283185307179586" velocity="6.283185307179586"/>
+    <!-- <safety_controller k_position="20" k_velocity="0.0" soft_lower_limit="-6.133185307179586" soft_upper_limit="6.133185307179586"/> -->
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="ra_wrist_2_joint" type="revolute">
+    <parent link="ra_wrist_1_link"/>
+    <child link="ra_wrist_2_link"/>
+    <origin rpy="1.570796327 0 0" xyz="0 -0.08535 -1.750557762378351e-11"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="12.0" lower="-6.283185307179586" upper="6.283185307179586" velocity="6.283185307179586"/>
+    <!-- <safety_controller k_position="20" k_velocity="0.0" soft_lower_limit="-6.133185307179586" soft_upper_limit="6.133185307179586"/> -->
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="ra_wrist_3_joint" type="revolute">
+    <parent link="ra_wrist_2_link"/>
+    <child link="ra_wrist_3_link"/>
+    <origin rpy="1.570796326589793 3.141592653589793 3.141592653589793" xyz="0 0.0819 -1.679797079540562e-11"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="12.0" lower="-6.283185307179586" upper="6.283185307179586" velocity="6.283185307179586"/>
+    <!-- <safety_controller k_position="20" k_velocity="0.0" soft_lower_limit="-6.133185307179586" soft_upper_limit="6.133185307179586"/> -->
+    <dynamics damping="0" friction="0"/>
+  </joint>
+
+  <!-- ROS-Industrial 'base' frame - base_link to UR 'Base' Coordinates transform -->
+  <link name="ra_base"/>
+  <joint name="ra_base_link_base_fixed_joint" type="fixed">
+    <origin rpy="0 0 3.141592653589793" xyz="0 0 0"/>
+    <parent link="ra_base_link"/>
+    <child link="ra_base"/>
+  </joint>
+
+  <!-- ROS-Industrial 'flange' frame - attachment point for EEF models -->
+  <link name="ra_flange"/>
+  <joint name="ra_wrist_3_flange" type="fixed">
+    <parent link="ra_wrist_3_link"/>
+    <child link="ra_flange"/>
+    <!-- <origin rpy="0 -1.5707963267948966 -1.5707963267948966" xyz="0 0 0"/> -->
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+
+  <!-- End effector joint -->
+  <link name="ra_ee_link"/>
+  <joint name="ra_ee_joint" type="fixed">
+    <parent link="ra_flange"/>
+    <child link="ra_ee_link"/>
+    <origin rpy="0 0 0" xyz="0 0.065 0.125"/>
+  </joint>
+
+  <!-- ROS-Industrial 'tool0' frame - all-zeros tool frame -->
+  <link name="ra_tool0"/>
+  <joint name="ra_flange_tool0" type="fixed">
+    <!-- default toolframe - X+ left, Y+ up, Z+ front -->
+    <!-- <origin rpy="1.5707963267948966 0 1.5707963267948966" xyz="0 0 0"/> -->
+    <origin rpy="1.5707963267948966 0 0" xyz="0 -0.045 0.07"/>
+    <parent link="ra_flange"/>
+    <child link="ra_tool0"/>
+  </joint>
+
+  <joint name="ra_allegro_mount" type="fixed">
+    <!-- <origin rpy="0 -1.5707963267948966 3.14" xyz="0.095 -0.0015 0.0095"/> -->
+    <origin rpy="0 0 1.5707963267948966" xyz="0 0.0095 0.095"/>
+    <parent link="ra_flange"/>
+    <child link="ra_palm_link"/>
+  </joint>
+
+  <!-- HAND AllEGRO -->
+  <!-- PALM -->
+  <link name="ra_palm_link">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/base_link.STL" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <material name="black">
+        <color rgba="0.2 0.2 0.2 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="meshes/allegro_slim/base_link.STL"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0.0475" />
+      <mass value="0.4154" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <!-- ============================================================================= -->
+  <!-- [LINK 0, 4, 8] -->
+  <link name="ra_link_0_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_0_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.0164" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.0082" />
+    </collision>
+    <inertial>
+      <mass value="0.0119" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_0_0" type="revolute">
+    <axis xyz="0 0 1" />
+    <limit effort="15" lower="-0.47" upper="0.47" velocity="7" />
+    <parent link="ra_palm_link" />
+    <child link="ra_link_0_0" />
+    <origin rpy="-0.08726646254999999 0 0" xyz="0 0.0435 0" />
+    <dynamics damping="3" friction="10" />
+  </joint>
+  <!-- [LINK 1, 5, 9] -->
+  <link name="ra_link_1_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_1_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.054" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.027" />
+    </collision>
+    <inertial>
+      <mass value="0.065" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_1_0" type="revolute">
+    <limit effort="15" lower="-0.19599999999999998" upper="1.6099999999999999" velocity="7" />
+    <axis xyz="0 1 0" />
+    <parent link="ra_link_0_0" />
+    <child link="ra_link_1_0" />
+    <origin xyz="0 0 0.0164" />
+    <dynamics damping="3" friction="5" />
+  </joint>
+  <!-- [LINK 2, 6, 10]-->
+  <link name="ra_link_2_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_2_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.0384" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.0192" />
+    </collision>
+    <inertial>
+      <mass value="0.0355" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_2_0" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="15" lower="-0.17400000000000002" upper="1.7089999999999999" velocity="7" />
+    <parent link="ra_link_1_0" />
+    <child link="ra_link_2_0" />
+    <origin xyz="0 0 0.054" />
+    <dynamics damping="8" friction="10" />
+  </joint>
+  <!-- [LINK 3, 7, 11] -->
+  <link name="ra_link_3_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_3_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.026699999999999998" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.013349999999999999" />
+    </collision>
+    <inertial>
+      <mass value="0.0096" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_3_0" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="15" lower="-0.227" upper="1.6179999999999999" velocity="7" />
+    <parent link="ra_link_2_0" />
+    <child link="ra_link_3_0" />
+    <origin xyz="0 0 0.0384" />
+    <dynamics damping="10" friction="12" />
+  </joint>
+  <!-- [FINGER TIP] -->
+  <link name="ra_link_3_0_tip">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_3_0_tip.STL" />
+      </geometry>
+      <material name="white">
+        <color rgba=".9 .9 .9 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.012" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+    </collision>
+    <inertial>
+      <mass value="0.0168" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_3_0_tip" type="fixed">
+    <parent link="ra_link_3_0" />
+    <child link="ra_link_3_0_tip" />
+    <origin rpy="0 0 0" xyz="0 0 0.026699999999999998" />
+  </joint>
+  <!-- [LINK 0, 4, 8] -->
+  <link name="ra_link_4_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_0_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.0164" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.0082" />
+    </collision>
+    <inertial>
+      <mass value="0.0119" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_4_0" type="revolute">
+    <axis xyz="0 0 1" />
+    <limit effort="15" lower="-0.47" upper="0.47" velocity="7" />
+    <parent link="ra_palm_link" />
+    <child link="ra_link_4_0" />
+    <origin rpy="0.0 0 0" xyz="0 0 0" />
+    <dynamics damping="3" friction="10" />
+  </joint>
+  <!-- [LINK 1, 5, 9] -->
+  <link name="ra_link_5_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_1_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.054" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.027" />
+    </collision>
+    <inertial>
+      <mass value="0.065" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_5_0" type="revolute">
+    <limit effort="15" lower="-0.19599999999999998" upper="1.6099999999999999" velocity="7" />
+    <axis xyz="0 1 0" />
+    <parent link="ra_link_4_0" />
+    <child link="ra_link_5_0" />
+    <origin xyz="0 0 0.0164" />
+    <dynamics damping="3" friction="5" />
+  </joint>
+  <!-- [LINK 2, 6, 10]-->
+  <link name="ra_link_6_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_2_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.0384" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.0192" />
+    </collision>
+    <inertial>
+      <mass value="0.0355" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_6_0" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="15" lower="-0.17400000000000002" upper="1.7089999999999999" velocity="7" />
+    <parent link="ra_link_5_0" />
+    <child link="ra_link_6_0" />
+    <origin xyz="0 0 0.054" />
+    <dynamics damping="8" friction="10" />
+  </joint>
+  <!-- [LINK 3, 7, 11] -->
+  <link name="ra_link_7_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_3_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.026699999999999998" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.013349999999999999" />
+    </collision>
+    <inertial>
+      <mass value="0.0096" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_7_0" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="15" lower="-0.227" upper="1.6179999999999999" velocity="7" />
+    <parent link="ra_link_6_0" />
+    <child link="ra_link_7_0" />
+    <origin xyz="0 0 0.0384" />
+    <dynamics damping="10" friction="12" />
+  </joint>
+  <!-- [FINGER TIP] -->
+  <link name="ra_link_7_0_tip">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_3_0_tip.STL" />
+      </geometry>
+      <material name="white">
+        <color rgba=".9 .9 .9 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.012" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+    </collision>
+    <inertial>
+      <mass value="0.0168" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="9.68e-07" ixy="0" ixz="0" iyy="9.68e-07" iyz="0" izz="9.68e-07" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_7_0_tip" type="fixed">
+    <parent link="ra_link_7_0" />
+    <child link="ra_link_7_0_tip" />
+    <origin rpy="0 0 0" xyz="0 0 0.026699999999999998" />
+  </joint>
+  <!-- [LINK 0, 4, 8] -->
+  <link name="ra_link_8_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_0_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.0164" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.0082" />
+    </collision>
+    <inertial>
+      <mass value="0.0119" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_8_0" type="revolute">
+    <axis xyz="0 0 1" />
+    <limit effort="15" lower="-0.47" upper="0.47" velocity="7" />
+    <parent link="ra_palm_link" />
+    <child link="ra_link_8_0" />
+    <origin rpy="0.08726646254999999 0 0" xyz="0 -0.0435 0" />
+    <dynamics damping="3" friction="10" />
+  </joint>
+  <!-- [LINK 1, 5, 9] -->
+  <link name="ra_link_9_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_1_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.054" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.027" />
+    </collision>
+    <inertial>
+      <mass value="0.065" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_9_0" type="revolute">
+    <limit effort="15" lower="-0.19599999999999998" upper="1.6099999999999999" velocity="7" />
+    <axis xyz="0 1 0" />
+    <parent link="ra_link_8_0" />
+    <child link="ra_link_9_0" />
+    <origin xyz="0 0 0.0164" />
+    <dynamics damping="3" friction="5" />
+  </joint>
+  <!-- [LINK 2, 6, 10]-->
+  <link name="ra_link_10_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_2_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.0384" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.0192" />
+    </collision>
+    <inertial>
+      <mass value="0.0355" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_10_0" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="15" lower="-0.17400000000000002" upper="1.7089999999999999" velocity="7" />
+    <parent link="ra_link_9_0" />
+    <child link="ra_link_10_0" />
+    <origin xyz="0 0 0.054" />
+    <dynamics damping="8" friction="10" />
+  </joint>
+  <!-- [LINK 3, 7, 11] -->
+  <link name="ra_link_11_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_3_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.026699999999999998" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.013349999999999999" />
+    </collision>
+    <inertial>
+      <mass value="0.0096" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_11_0" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="15" lower="-0.227" upper="1.6179999999999999" velocity="7" />
+    <parent link="ra_link_10_0" />
+    <child link="ra_link_11_0" />
+    <origin xyz="0 0 0.0384" />
+    <dynamics damping="10" friction="12" />
+  </joint>
+  <!-- [FINGER TIP] -->
+  <link name="ra_link_11_0_tip">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_3_0_tip.STL" />
+      </geometry>
+      <material name="white">
+        <color rgba=".9 .9 .9 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.012" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+    </collision>
+    <inertial>
+      <mass value="0.0168" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="9.68e-07" ixy="0" ixz="0" iyy="9.68e-07" iyz="0" izz="9.68e-07" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_11_0_tip" type="fixed">
+    <parent link="ra_link_11_0" />
+    <child link="ra_link_11_0_tip" />
+    <origin rpy="0 0 0" xyz="0 0 0.026699999999999998" />
+  </joint>
+  <!-- [LINK 12] -->
+  <link name="ra_link_12_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_12_0_right.STL" />
+      </geometry>
+      <material name="black">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+      <origin rpy="0.01745329251 0 0" xyz="0 0 0" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0358 0.034 0.0455" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="-0.0179 0.017 0.02275" />
+    </collision>
+    <inertial>
+      <mass value="0.0176" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_12_0" type="revolute">
+    <axis xyz="-1 0 0" />
+    <limit effort="15" lower="0.36" upper="1.396" velocity="7" />
+    <parent link="ra_palm_link" />
+    <child link="ra_link_12_0" />
+    <origin rpy="0 -1.6580627884499999 -1.5707963259" xyz="-0.0182 0.019333 -0.045987" />
+    <dynamics damping="3" friction="10" />
+  </joint>
+  <!-- [LINK 13] -->
+  <link name="ra_link_13_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_13_0.STL" />
+      </geometry>
+      <material name="black">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.0177" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.00885" />
+    </collision>
+    <inertial>
+      <mass value="0.0119" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_13_0" type="revolute">
+    <axis xyz="0 0 1" />
+    <limit effort="15" lower="-0.10499999999999998" upper="1.1629999999999998" velocity="7" />
+    <parent link="ra_link_12_0" />
+    <child link="ra_link_13_0" />
+    <origin xyz="-0.027 0.005 0.0399" />
+    <dynamics damping="3" friction="5" />
+  </joint>
+  <!-- [LINK 14] -->
+  <link name="ra_link_14_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_14_0.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.0514" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.0257" />
+    </collision>
+    <inertial>
+      <mass value="0.038" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_14_0" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="15" lower="-0.18899999999999997" upper="1.644" velocity="7" />
+    <parent link="ra_link_13_0" />
+    <child link="ra_link_14_0" />
+    <origin xyz="0 0 0.0177" />
+    <dynamics damping="3" friction="10" />
+  </joint>
+  <!-- [LINK 15] -->
+  <link name="ra_link_15_0">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_15_0.STL" />
+      </geometry>
+      <material name="black">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.0196 0.0275 0.042300000000000004" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.021150000000000002" />
+    </collision>
+    <inertial>
+      <mass value="0.0388" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_15_0" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="15" lower="-0.162" upper="1.7189999999999999" velocity="7" />
+    <parent link="ra_link_14_0" />
+    <child link="ra_link_15_0" />
+    <origin xyz="0 0 0.0514" />
+    <dynamics damping="3" friction="12" />
+  </joint>
+  <!-- [FINGER TIP] -->
+  <link name="ra_link_15_0_tip">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/link_15_0_tip.STL" />
+      </geometry>
+      <material name="white">
+        <color rgba=".9 .9 .9 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.012" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+    </collision>
+    <inertial>
+      <mass value="0.0168" />
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <inertia ixx="9.68e-07" ixy="0" ixz="0" iyy="9.68e-07" iyz="0" izz="9.68e-07" />
+    </inertial>
+  </link>
+  <joint name="ra_joint_15_0_tip" type="fixed">
+    <parent link="ra_link_15_0" />
+    <child link="ra_link_15_0_tip" />
+    <origin rpy="0 0 0" xyz="0 0 0.026699999999999998" />
+  </joint>
+
+</robot>

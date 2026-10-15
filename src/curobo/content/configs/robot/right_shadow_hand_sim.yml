@@ -1,0 +1,138 @@
+##
+## Copyright (c) 2023 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+##
+## NVIDIA CORPORATION, its affiliates and licensors retain all intellectual
+## property and proprietary rights in and to this material, related
+## documentation and any modifications thereto. Any use, reproduction,
+## disclosure or distribution of this material and related documentation
+## without an express license agreement from NVIDIA CORPORATION or
+## its affiliates is strictly prohibited.
+##
+
+robot_cfg:
+  robot_color: [0.863157, 0.0865002, 0.0802199, 1.0]
+  kinematics:
+    grad_group_names: [
+      ['rh_FFJ4', 'rh_FFJ3', 'rh_FFJ2', 'rh_FFJ1'],
+      ['rh_MFJ4','rh_MFJ3', 'rh_MFJ2', 'rh_MFJ1'],
+      ['rh_RFJ4','rh_RFJ3', 'rh_RFJ2', 'rh_RFJ1'],
+      ['rh_LFJ5','rh_LFJ4', 'rh_LFJ3', 'rh_LFJ2', 'rh_LFJ1'],
+      ['rh_THJ5', 'rh_THJ4', 'rh_THJ3', 'rh_THJ2','rh_THJ1']
+    ]
+    use_root_pose: True
+    hand_pose_transfer_path: "hand_pose_transfer/right_shadow_hand.yml"
+    usd_path: "robot/shadow_hand/right_shadow.usd"
+    usd_robot_root: "/robot"
+    isaac_usd_path: ""
+    usd_flip_joints: {}
+    usd_flip_joint_limits: []
+
+    urdf_path: "robot/shadow_hand/right_sim.urdf"
+    asset_root_path: "robot/shadow_hand"
+    # urdf_path: "robot/sr_grasp_description/urdf/shadowhand_wrist_free.urdf"
+    # asset_root_path: "robot/sr_grasp_description"
+    
+    base_link: "rh_palm"
+    ee_link: "rh_palm"
+    link_names: ["rh_thdistal", "rh_ffdistal", "rh_mfdistal", "rh_rfdistal", "rh_lfdistal"]
+    lock_joints: null
+    extra_links: null
+
+    tendon_joints: [['rh_FFJ2','rh_FFJ1'], ['rh_MFJ2','rh_MFJ1'], ['rh_RFJ2','rh_RFJ1'], ['rh_LFJ2','rh_LFJ1']]
+    collision_link_names: [
+        "rh_palm",
+        "rh_ffproximal",
+        "rh_ffmiddle",
+        "rh_ffdistal",
+        "rh_mfproximal",
+        "rh_mfmiddle",
+        "rh_mfdistal",
+        "rh_rfproximal",
+        "rh_rfmiddle",
+        "rh_rfdistal",
+        "rh_lfmetacarpal",
+        "rh_lfproximal",
+        "rh_lfmiddle",
+        "rh_lfdistal",
+        "rh_thproximal",        
+        "rh_thmiddle",        
+        "rh_thdistal",        
+      ] # List[str]
+    collision_spheres: "spheres/right_shadow_hand.yml" #
+    collision_sphere_buffer: 0.00
+    extra_collision_spheres: {}
+    self_collision_ignore: {
+      'rh_palm' : ['rh_ffproximal', 'rh_mfproximal', 'rh_rfproximal', 'rh_lfmetacarpal', 'rh_thproximal'],
+      'rh_ffproximal' : ['rh_ffmiddle'],
+      'rh_ffmiddle' : ['rh_ffdistal'],
+      'rh_ffdistal' : [],
+      'rh_mfproximal' : ['rh_mfmiddle'],
+      'rh_mfmiddle' : ['rh_mfdistal'],
+      'rh_mfdistal' : [],
+      'rh_rfproximal' : ['rh_rfmiddle'],
+      'rh_rfmiddle' : ['rh_rfdistal'],
+      'rh_rfdistal' : [],
+      'rh_thproximal' : ['rh_thmiddle'],
+      'rh_thmiddle' : ['rh_thdistal'],
+      'rh_thdistal' : [],
+      'rh_lfmetacarpal' : ['rh_lfproximal'],
+      'rh_lfproximal': ['rh_lfmiddle'],
+      'rh_lfmiddle' : ['rh_lfdistal'],
+      'rh_lfdistal' : [],
+    }
+    self_collision_buffer: {
+      'rh_palm' : 0,
+      'rh_ffproximal' : 0,
+      'rh_ffmiddle' : 0,
+      'rh_ffdistal' : 0.001,
+      'rh_mfproximal' : 0,
+      'rh_mfmiddle' : 0,
+      'rh_mfdistal' : 0.001,
+      'rh_rfproximal' : 0,
+      'rh_rfmiddle' : 0,
+      'rh_rfdistal' : 0.001,
+      'rh_thproximal' : 0,
+      'rh_thmiddle' : 0,
+      'rh_thdistal' : 0.001,
+      'rh_lfmetacarpal' : 0,
+      'rh_lfproximal': 0,
+      'rh_lfmiddle' : 0,
+      'rh_lfdistal' : 0.001,
+    } # Dict[str, float]
+
+    use_global_cumul: True
+    mesh_link_names: [
+        "rh_palm",
+        "rh_ffknuckle",
+        "rh_ffproximal",
+        "rh_ffmiddle",
+        "rh_ffdistal",
+        "rh_mfknuckle",
+        "rh_mfproximal",
+        "rh_mfmiddle",
+        "rh_mfdistal",
+        "rh_rfknuckle",
+        "rh_rfproximal",
+        "rh_rfmiddle",
+        "rh_rfdistal",
+        "rh_lfmetacarpal",
+        "rh_lfknuckle",
+        "rh_lfproximal",
+        "rh_lfmiddle",
+        "rh_lfdistal",
+        "rh_thproximal",        
+        "rh_thmiddle",        
+        "rh_thdistal",        
+      ] # List[str]
+
+    cspace:
+      joint_names: ['rh_FFJ4', 'rh_FFJ3', 'rh_FFJ2', 'rh_FFJ1',
+                 'rh_MFJ4','rh_MFJ3', 'rh_MFJ2', 'rh_MFJ1',
+                 'rh_RFJ4','rh_RFJ3', 'rh_RFJ2', 'rh_RFJ1',
+                 'rh_LFJ5','rh_LFJ4', 'rh_LFJ3', 'rh_LFJ2', 'rh_LFJ1',
+                 'rh_THJ5', 'rh_THJ4', 'rh_THJ3', 'rh_THJ2','rh_THJ1',] # List[str]
+      retract_config: [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,0, 0,0,0,0,0] # List[float]
+      null_space_weight: [1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1,1, 1,1,1,1,1] # List[str]
+      cspace_distance_weight: [1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1,1, 1,1,1,1,1] # List[str]
+      max_jerk: 500.0
+      max_acceleration: 15.0

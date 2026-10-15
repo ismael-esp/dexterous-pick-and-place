@@ -1,0 +1,71 @@
+world:
+  type: scene_cfg
+  # Points at a single .npy file written by fp_scene_cfg_bridge.py with the
+  # latest FoundationPose detection of the target object.
+  template_path: object/custom/scene_cfg/*/runtime/latest.npy
+  start:
+  end:
+
+robot_file: "ra_allegro.yml"
+robot_file_with_arm: "ra_ur3_allegro.yml"
+base_cfg_file: "base_grasp.yml"
+particle_file: "particle_grasp_debug.yml"
+gradient_file: "gradient_grasp_fc.yml"
+
+exp_name: 'pinch_ra'
+seed_num: 20
+seeder_cfg:
+  obj_sample:
+    num: 128
+    inflate: 0.1
+    convex_hull: True
+    collision_free: False
+  ik_init_q:
+  load_path:
+  skip_transfer: False
+  t:
+  # Same top-down approach as the 4-finger wrap (palm_x=-Z, palm_y=-X).
+  r: [0.0, 0.0, -1.0,  -1.0, 0.0, 0.0]
+  q: [0., 0.6, 0., 0., 0., 0.6, 0., 0., 0., 0.6, 0., 0., 1.2, 0., 0., 0.,]
+  jitter_angle: [[-30, -10, -10], [30, 10, 10]]
+  jitter_dist: [[0.0, -0.02, -0.02], [0.02, 0.02, 0.02]]
+
+# PINCH with the THUMB as a BACKSTOP. For small slippery round objects (tomato,
+# peach) the full 4-finger wrap shoves the object away as it closes. Here only
+# two fingers (index, middle) press the object against the OPPOSING thumb, which
+# acts as a wall behind the object so it can't squirt out. The ring finger
+# (ra_link_11_0_tip) is dropped. Contact indices below: 0=index, 1=middle,
+# 2=thumb.
+grasp_contact_strategy:
+  contact_points_name:
+    - 'ra_link_3_0_tip/0'     # index finger
+    - 'ra_link_7_0_tip/0'     # middle finger
+    - 'ra_link_15_0_tip/0'    # thumb (backstop)
+  opt_progress: [0.0, 0.6, 0.8]
+  distance: [0.01, 0.01, 0.0]
+  contact_query_mode: [-1, 0, 0]
+  save_qpos: [False, True]
+  max_ge_stage: 0
+
+grasp_cfg:
+  task_dict:
+    f: [0, 0, 1]
+    p: [0, 0, 0]
+    t: [0, 0, 0]
+    gamma: 180
+  ge_param:
+    type: 'qp'
+    miu_coef: [0.1, 0]
+    solver_type: 'batch_reluqp'
+    k_lower: 0.2
+    # 0=index, 1=middle, 2=thumb. The two fingers press the object onto the
+    # opposing thumb; the thumb is the backstop (lower min force).
+    pressure_constraints:
+      [[[0, 1, 2], 1.0],
+        [[0, 1], 0.5],
+        [[2], 0.4],
+      ]
+    enable_density: False
+    solve_interval: 5
+
+mogen_init: [0.47700070, -0.76760139, 1.71352310, -4.06449313, -1.25647330, 3.90605361,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

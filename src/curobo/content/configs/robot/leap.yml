@@ -1,0 +1,208 @@
+##
+## Copyright (c) 2023 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+##
+## NVIDIA CORPORATION, its affiliates and licensors retain all intellectual
+## property and proprietary rights in and to this material, related
+## documentation and any modifications thereto. Any use, reproduction,
+## disclosure or distribution of this material and related documentation
+## without an express license agreement from NVIDIA CORPORATION or
+## its affiliates is strictly prohibited.
+##
+# /home/ubuntu/Downloads/curobo/src/curobo/content/assets/robot/ur_description/ur5_leap.urdf
+robot_cfg:
+  kinematics:
+    use_root_pose: True
+    hand_pose_transfer_path: "hand_pose_transfer/leap.yml"
+    usd_path: "robot/leap_description/leap.usd"
+    usd_robot_root: "/robot"
+    isaac_usd_path: ""
+    usd_flip_joints: {}
+    usd_flip_joint_limits: []
+
+    urdf_path: "robot/leap_description/urdf/leap_hand_simplified.urdf"
+    asset_root_path: "robot/leap_description"
+    
+    base_link: "hand_base_link"
+    ee_link: "fingertip"
+    link_names: ['fingertip', 'fingertip_2', 'fingertip_3', 'thumb_fingertip']
+    lock_joints: null
+    extra_links: null
+
+    
+    collision_link_names: ['hand_base_link', 'mcp_joint', 'pip', 'dip', 'fingertip', 'mcp_joint_2', 'pip_2', 'dip_2', 'fingertip_2', 'mcp_joint_3', 'pip_3', 'dip_3', 'fingertip_3', 'pip_4', 'thumb_dip', 'thumb_fingertip']
+    collision_spheres:
+      hand_base_link:
+        - "center": [-0.04, 0.004, -0.012]
+          "radius": 0.025
+        - "center": [-0.04, -0.036, -0.012]
+          "radius": 0.025
+        - "center": [-0.04, -0.076, -0.012]
+          "radius": 0.025
+        - "center": [-0.075, -0.055, -0.012]
+          "radius": 0.025
+        - "center": [-0.009, 0.009, -0.012]
+          "radius": 0.015
+        - "center": [-0.009, -0.037, -0.012]
+          "radius": 0.015
+        - "center": [-0.009, -0.082, -0.012]
+          "radius": 0.015
+      mcp_joint:
+        - "center": [-0.027, 0.052, 0.014]
+          "radius": 0.015
+        - "center": [-0.027, 0.032, 0.014]
+          "radius": 0.015
+      mcp_joint_2:
+        - "center": [-0.027, 0.032, 0.014]
+          "radius": 0.015
+        - "center": [-0.027, 0.052, 0.014]
+          "radius": 0.015
+      mcp_joint_3:
+        - "center": [-0.027, 0.052, 0.014]
+          "radius": 0.015
+        - "center": [-0.027, 0.032, 0.014]
+          "radius": 0.015
+      pip:
+        - "center": [0.001, 0.0, -0.011]
+          "radius": 0.015
+        - "center": [0.014, 0.0, -0.011]
+          "radius": 0.015
+      pip_2:
+        - "center": [0.014, 0.0, -0.011]
+          "radius": 0.015
+        - "center": [0.001, 0.0, -0.011]
+          "radius": 0.015
+      pip_3:
+        - "center": [0.014, 0.0, -0.011]
+          "radius": 0.015
+        - "center": [0.001, 0.0, -0.011]
+          "radius": 0.015
+      dip:
+        - "center": [0.002, -0.022, 0.015]
+          "radius": 0.015
+        - "center": [0.002, -0.046, 0.02]
+          "radius": 0.015
+        - "center": [0.002, -0.046, 0.01]
+          "radius": 0.015
+        - "center": [0.014, -0.035, 0.015]
+          "radius": 0.015
+      dip_2:
+        - "center": [0.002, -0.022, 0.015]
+          "radius": 0.015
+        - "center": [0.002, -0.046, 0.02]
+          "radius": 0.015
+        - "center": [0.002, -0.046, 0.01]
+          "radius": 0.015
+        - "center": [0.014, -0.035, 0.015]
+          "radius": 0.015
+      dip_3:
+        - "center": [0.002, -0.022, 0.015]
+          "radius": 0.015
+        - "center": [0.002, -0.046, 0.02]
+          "radius": 0.015
+        - "center": [0.002, -0.046, 0.01]
+          "radius": 0.015
+        - "center": [0.014, -0.035, 0.015]
+          "radius": 0.015
+      fingertip:
+        - "center": [0.0, -0.024, 0.014]
+          "radius": 0.012
+        - "center": [0.0, -0.038, 0.014]
+          "radius": 0.012
+      fingertip_2:
+        - "center": [0.0, -0.024, 0.014]
+          "radius": 0.012
+        - "center": [0.0, -0.038, 0.014]
+          "radius": 0.012
+      fingertip_3:
+        - "center": [0.0, -0.024, 0.014]
+          "radius": 0.012
+        - "center": [0.0, -0.038, 0.014]
+          "radius": 0.012
+      pip_4:
+        - "center": [-0.005, 0.0, -0.012]
+          "radius": 0.015
+      thumb_dip:
+        - "center": [0.0, 0.002, -0.014]
+          "radius": 0.015
+        - "center": [0.0, 0.022, -0.014]
+          "radius": 0.015
+      thumb_fingertip:
+        - "center": [0.0, -0.002, -0.014]
+          "radius": 0.015
+        - "center": [0.0, -0.01, -0.014]
+          "radius": 0.015
+        - "center": [0.0, -0.03, -0.014]
+          "radius": 0.012
+        - "center": [0.0, -0.05, -0.014]
+          "radius": 0.012
+       
+
+    collision_sphere_buffer: 0.0
+    extra_collision_spheres: {}
+    self_collision_ignore: {
+      'hand_base_link' : ['mcp_joint', 'mcp_joint_2', 'mcp_joint_3', 'pip_4', 'thumb_dip'],
+      'mcp_joint' : ['pip'],
+      'pip' : ['dip'],
+      'dip' : ['fingertip'],
+      'fingertip' : [],
+      'mcp_joint_2' : ['pip_2'],
+      'pip_2': ['dip_2'],
+      'dip_2' : ['fingertip_2'],
+      'fingertip_2' : [],
+      'mcp_joint_3' : ['pip_3'],
+      'pip_3' : ['dip_3'], 
+      'dip_3' : ['fingertip_3'],
+      'fingertip_3' : [],
+      'pip_4' : ['thumb_dip'],
+      'thumb_dip' : ['thumb_fingertip'],
+      'thumb_fingertip' : [],
+    }
+    self_collision_buffer: {
+      'hand_base_link' : 0,
+      'mcp_joint' : 0,
+      'pip' : 0,
+      'dip' : 0,
+      'fingertip' : 0.002,
+      'mcp_joint_2' : 0,
+      'pip_2': 0,
+      'dip_2' : 0,
+      'fingertip_2' : 0.002,
+      'mcp_joint_3' : 0,
+      'pip_3' : 0, 
+      'dip_3' : 0,
+      'fingertip_3' : 0.002,
+      'pip_4' : 0,
+      'thumb_dip' : 0,
+      'thumb_fingertip' : 0.002,
+    }
+
+    use_global_cumul: True
+    mesh_link_names:
+      [
+        'hand_base_link' ,
+        'mcp_joint' ,
+        'pip' ,
+        'dip' ,
+        'fingertip' ,
+        'mcp_joint_2' ,
+        'pip_2',
+        'dip_2' ,
+        'fingertip_2' ,
+        'mcp_joint_3' ,
+        'pip_3' , 
+        'dip_3' ,
+        'fingertip_3' ,
+        'pip_4' ,
+        'thumb_dip' ,
+        'thumb_fingertip',
+      ]
+
+    cspace:
+      joint_names: ['j12', 'j13', 'j14', 'j15', 'j1', 'j0', 'j2', 'j3', 'j5', 'j4', 'j6', 'j7', 'j9', 'j8', 'j10', 'j11']
+      # retract_config: [0.0, -1.0471975511965976, 1.3089969389957472, 1.3089969389957472, 1.5707963267948966, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] # List[float]
+      retract_config: [-0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] # List[float]
+      # retract_config: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] # List[float]
+      null_space_weight: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      cspace_distance_weight: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      max_jerk: 500.0
+      max_acceleration: 15.0
