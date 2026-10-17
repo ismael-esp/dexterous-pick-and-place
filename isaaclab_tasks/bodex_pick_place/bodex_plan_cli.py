@@ -7,8 +7,8 @@ task (running in env_isaaclab) to read back.
 
 Usage (called as a subprocess from Isaac Lab env):
 
-    /home/robot/anaconda3/envs/bodex/bin/python \\
-        /mnt/ssd2/ws/Dualarm_ws/BODex/isaaclab_tasks/bodex_pick_place/bodex_plan_cli.py \\
+    $BODEX_SERVICE_PYTHON \\
+        isaaclab_tasks/bodex_pick_place/bodex_plan_cli.py \\
         --active_arm ra --object_id peach \\
         --object_pose 0.1 0.45 1.16 1 0 0 0 \\
         --place_xyz  0.2 0.40 1.18 \\

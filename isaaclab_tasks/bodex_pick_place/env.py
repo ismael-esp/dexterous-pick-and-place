@@ -126,6 +126,7 @@ class BODexPickPlaceEnv(DirectRLEnv):
         from bodex_service import BODexClient
         self._bodex_client = BODexClient(
             socket_path="/tmp/bodex_service.sock",
+            bodex_python=self.cfg.bodex_python or None,
             auto_start=True,
             verbose=True,   # forward worker stdout so filter + BODex log lines are visible
         )

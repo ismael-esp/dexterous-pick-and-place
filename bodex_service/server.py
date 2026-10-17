@@ -5,7 +5,7 @@ grasp synthesis requests; keeps cuRobo + CUDA kernels resident between calls.
 
 Typical startup (handled automatically by BODexClient):
 
-    /home/robot/anaconda3/envs/bodex/bin/python -m bodex_service.server \
+    $BODEX_SERVICE_PYTHON -m bodex_service.server \
         --socket /tmp/bodex_service.sock
 
 Protocol:

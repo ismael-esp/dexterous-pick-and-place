@@ -30,6 +30,7 @@ Or as a long-lived singleton:
 from __future__ import annotations
 
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -46,10 +47,39 @@ _BODEX_REPO = os.path.dirname(_HERE)                           # /.../BODex
 _ISAACLAB_TASKS = os.path.join(_BODEX_REPO, "isaaclab_tasks")
 _SERVER_SCRIPT = os.path.join(_HERE, "server.py")
 
-# The bodex conda env's python. Can be overridden via env var.
-DEFAULT_BODEX_PYTHON = os.environ.get(
-    "BODEX_SERVICE_PYTHON", "/home/robot/anaconda3/envs/bodex/bin/python"
-)
+# Name of the conda env the worker runs in (created by scripts/install.sh).
+BODEX_ENV_NAME = "bodex"
+
+
+def find_bodex_python(env_name: str = BODEX_ENV_NAME) -> str:
+    """Return the python interpreter of the bodex conda env.
+
+    Uses $BODEX_SERVICE_PYTHON when set (scripts/install.sh exports it inside
+    the env), otherwise asks conda with `conda run -n <env_name>`. Raises a
+    RuntimeError that says how to set it when neither works.
+    """
+    path = os.environ.get("BODEX_SERVICE_PYTHON")
+    if path:
+        return path
+    conda = os.environ.get("CONDA_EXE") or shutil.which("conda")
+    if conda:
+        try:
+            out = subprocess.run(
+                [conda, "run", "-n", env_name, "python", "-c",
+                 "import sys; print(sys.executable)"],
+                capture_output=True, text=True, timeout=60, check=True,
+            ).stdout.strip()
+            if out and os.path.exists(out.splitlines()[-1]):
+                return out.splitlines()[-1]
+        except (OSError, subprocess.SubprocessError):
+            pass
+    raise RuntimeError(
+        f"Cannot find the python of the '{env_name}' conda env "
+        f"({'conda run failed' if conda else 'conda not found'}). Set it with\n"
+        f"    export BODEX_SERVICE_PYTHON=$(conda run -n {env_name} which python)\n"
+        "or pass bodex_python=... to BODexClient."
+    )
+
 
 # Default socket + auth
 DEFAULT_SOCKET = "/tmp/bodex_service.sock"
@@ -67,8 +97,9 @@ class BODexClient:
     ----------
     socket_path : str
         Unix socket path. If the worker already has this socket, we attach.
-    bodex_python : str
-        Path to the python interpreter inside the bodex conda env.
+    bodex_python : str, optional
+        Path to the python interpreter inside the bodex conda env. Default:
+        found by find_bodex_python() when a worker has to be started.
     auto_start : bool
         If True and no existing worker is responding, spawn one.
     startup_timeout : float
@@ -80,7 +111,7 @@ class BODexClient:
     def __init__(
         self,
         socket_path: str = DEFAULT_SOCKET,
-        bodex_python: str = DEFAULT_BODEX_PYTHON,
+        bodex_python: str | None = None,
         authkey: str = DEFAULT_AUTHKEY,
         auto_start: bool = True,
         startup_timeout: float = 60.0,
@@ -117,8 +148,13 @@ class BODexClient:
     def _start_server(self, startup_timeout: float):
         if not os.path.exists(self._server_script()):
             raise RuntimeError(f"server.py not found at {self._server_script()}")
+        if self.bodex_python is None:
+            self.bodex_python = find_bodex_python()
         if not os.path.exists(self.bodex_python):
-            raise RuntimeError(f"bodex python not found at {self.bodex_python}")
+            raise RuntimeError(
+                f"bodex python not found at {self.bodex_python} "
+                "(check BODEX_SERVICE_PYTHON or the bodex_python argument)"
+            )
 
         env = os.environ.copy()
         env["PYTHONNOUSERSITE"] = "1"

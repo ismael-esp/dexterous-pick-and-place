@@ -8,7 +8,7 @@ Long-running BODex grasp worker + Python client for use in other projects.
 
 Nothing to install — it's stdlib + numpy on the client side.
 
-The worker needs the `bodex` conda env (torch + cuRobo built). The client looks for `/home/robot/anaconda3/envs/bodex/bin/python` by default; override with the `BODEX_SERVICE_PYTHON` environment variable.
+The worker needs the `bodex` conda env (torch + cuRobo built). The client takes its interpreter from the `BODEX_SERVICE_PYTHON` environment variable (set inside the env by `scripts/install.sh`), otherwise asks `conda run -n bodex`, and fails with a message that says how to set it when neither works.
 
 ## Minimal example
 
@@ -49,7 +49,7 @@ Or install as editable in your env: `pip install -e /mnt/ssd2/ws/Dualarm_ws/BODe
 Normally `BODexClient(auto_start=True)` handles this. To start the worker directly (e.g. on boot, so every client attaches instantly):
 
 ```bash
-/home/robot/anaconda3/envs/bodex/bin/python -m bodex_service.server \
+$BODEX_SERVICE_PYTHON -m bodex_service.server \
     --socket /tmp/bodex_service.sock
 ```
 
@@ -83,7 +83,7 @@ Compared to the old subprocess-per-call path (6.6s) this is roughly 2x faster. T
 
 ### `BODexClient(socket_path, bodex_python, authkey, auto_start, startup_timeout, verbose)`
 - `socket_path` — Unix socket. Default `/tmp/bodex_service.sock`. Multiple workers with different sockets can coexist (e.g. one per GPU).
-- `bodex_python` — path to the bodex env's python. Default resolves from `BODEX_SERVICE_PYTHON` env var or `/home/robot/anaconda3/envs/bodex/bin/python`.
+- `bodex_python` — path to the bodex env's python. Default: the `BODEX_SERVICE_PYTHON` env var, else `conda run -n bodex` (resolved only when a worker has to be started).
 - `auto_start=True` — spawn a worker if no one is listening.
 - `verbose=False` — forward worker stdout/stderr to the client's console.
 

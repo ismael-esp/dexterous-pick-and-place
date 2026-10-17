@@ -452,8 +452,9 @@ class BODexPickPlaceEnvCfg(DirectRLEnvCfg):
     # Retries get a smaller seed budget (faster) since approach cycling
     # already provides the diversity that more seeds would.
     bodex_retry_seed_num: int = 10
-    bodex_python: str = os.environ.get(
-        "BODEX_SERVICE_PYTHON", "/home/robot/anaconda3/envs/bodex/bin/python")
+    # Interpreter of the bodex conda env for the grasp worker. Empty = let
+    # BODexClient find it ($BODEX_SERVICE_PYTHON, then `conda run -n bodex`).
+    bodex_python: str = os.environ.get("BODEX_SERVICE_PYTHON", "")
     bodex_cli: str = os.path.join(_HERE, "bodex_plan_cli.py")
     # Pass the passive arm's live joint state to BODex so the planner sees it
     # as a moving sphere obstacle (Level-2 collision avoidance from
