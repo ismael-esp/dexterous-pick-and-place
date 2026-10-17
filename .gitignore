@@ -3,6 +3,8 @@
 # videos are not stored in git: scripts/install.sh downloads the release assets.
 /*
 !/.gitignore
+!/.github/
+!/ruff.toml
 !/README.md
 !/LICENSE
 !/LICENSE_ASSETS

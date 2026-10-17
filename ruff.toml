@@ -1,0 +1,9 @@
+# Ruff lint policy, run in CI by .github/workflows/lint.yml (ruff 0.17.1).
+# Only errors that break code at run time are enforced: syntax errors, undefined
+# names and misplaced statements (E9, F63, F7, F82). Style is not enforced.
+
+# src/curobo/ is the upstream cuRobo / BODex source tree, kept as published.
+extend-exclude = ["src/curobo"]
+
+[lint]
+select = ["E9", "F63", "F7", "F82"]

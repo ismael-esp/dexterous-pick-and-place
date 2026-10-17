@@ -1,5 +1,7 @@
 # Dexterous Pick-and-Place: Perception → Grasp Synthesis → Dual-Arm Robot
 
+[![lint](https://github.com/ismael-esp/dexterous-pick-and-place/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/ismael-esp/dexterous-pick-and-place/actions/workflows/lint.yml)
+
 **Model-based dexterous pick-and-place with Allegro hands on a dual-arm UR3/UR3e torso.**
 A camera finds the object's 6D pose ([FoundationPose tracker](https://github.com/ismael-esp/foundationpose-ros2-tracker)).
 A GPU grasp synthesizer ([BODex](https://github.com/JYChen18/BODex), bilevel-optimized force-closure on
