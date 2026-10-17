@@ -7,6 +7,7 @@
 !/ruff.toml
 !/README.md
 !/LICENSE
+!/LICENSE-MIT
 !/LICENSE_ASSETS
 !/setup.py
 !/setup.cfg
