@@ -307,7 +307,7 @@ The FoundationPose tracker publishing `/<object>_pose`.
 selected benchmark object and publishes `/<object>_pose`:
 
 ```bash
-python3 test_foundation_pose.py --hand_frame ra_palm_link --viz_local --camera extra --cam_world_source tf
+python3 multi_object_switcher.py --hand_frame ra_palm_link --viz_local --camera extra --cam_world_source tf
 ```
 
 **2. Run the benchmark harness** (system Python + ROS 2 Humble). This is the exact command of the final

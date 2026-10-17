@@ -66,7 +66,7 @@ from bodex_hw.run_bodex_pick_place_hw import (
 # Editable configuration
 # --------------------------------------------------------------------------
 # Objects offered in the menu (order = menu order). This is the reviewer's
-# 10-object set, in the SAME order as test_foundation_pose.py's DEFAULT_OBJECTS,
+# 10-object set, in the SAME order as multi_object_switcher.py's DEFAULT_OBJECTS,
 # so menu number N here == FP viewer jump key N (0 = tea_peach) — switch the
 # tracker and pick the object with the same digit. tomato/peach are retired from
 # the menu; their PER_OBJECT configs below are kept (inert) for reference.
