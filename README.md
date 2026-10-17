@@ -379,8 +379,16 @@ with a slow, non-collision-checked return home.
 
 - **[BODex](https://github.com/JYChen18/BODex)** (Chen et al., ICRA 2025) and **[cuRobo](https://github.com/NVlabs/curobo)**
   (NVIDIA). `src/curobo/` is BODex's cuRobo fork with small changes for this robot. Both are under the
-  [NVIDIA License](LICENSE) (non-commercial). This repository is distributed under the same license, and
-  third-party assets keep the terms in [LICENSE_ASSETS](LICENSE_ASSETS).
+  [NVIDIA License](LICENSE) (non-commercial).
+- **Licenses in this repository:**
+  - [NVIDIA License](LICENSE) (non-commercial): `src/curobo/`, `example_grasp/`, `bodex_hw/trajectory.py`
+    (a NumPy port of BODex's trajectory post-processing) and `isaaclab_tasks/bodex_pick_place/bodex_plan_cli.py`
+    (built on BODex's planning examples).
+  - [MIT](LICENSE-MIT), Copyright (c) 2025-2026 Ismael Espinoza Jaramillo: everything else in `bodex_hw/`,
+    `bodex_service/`, `isaaclab_tasks/` and `scripts/`.
+  - Running the pipeline needs cuRobo/BODex and FoundationPose, which are NVIDIA non-commercial licenses, so
+    the full system is for non-commercial research use. Third-party assets keep the terms in
+    [LICENSE_ASSETS](LICENSE_ASSETS).
 - **[FoundationPose](https://github.com/NVlabs/FoundationPose)**, used through
   [foundationpose-ros2-tracker](https://github.com/ismael-esp/foundationpose-ros2-tracker).
 - **[Isaac Lab](https://github.com/isaac-sim/IsaacLab)** / Isaac Sim, Universal Robots ROS 2 driver, Wonik Robotics Allegro Hand.
